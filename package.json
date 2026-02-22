@@ -1,0 +1,64 @@
+{
+  "name": "react-ide-workspace-layout",
+  "version": "0.0.0",
+  "description": "A powerful React UI framework that brings the classic JetBrains IDEA docking workspace to the web. Build complex, draggable, and multi-panel web IDEs and tools with ease.",
+  "bugs": "https://github.com/leoweyr/react-ide-workspace-layout/issues",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
+  },
+  "keywords": [
+    "react",
+    "ide",
+    "workspace",
+    "layout",
+    "jetbrains-ui",
+    "split-pane",
+    "stateless",
+    "draggable",
+    "ui-framework"
+  ],
+  "author": "leoweyr <contact@leoweyr.com>",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "@storybook/react": "^7.6.17",
+    "@storybook/react-vite": "^7.6.17",
+    "@storybook/addon-links": "^7.6.17",
+    "@storybook/addon-essentials": "^7.6.17",
+    "@storybook/addon-interactions": "^7.6.17",
+    "@types/react": "^18.2.64",
+    "@types/react-dom": "^18.2.21",
+    "@vitejs/plugin-react": "^4.2.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "storybook": "^7.6.17",
+    "typescript": "^5.2.2",
+    "vite": "^5.1.6",
+    "vite-plugin-dts": "^3.7.3",
+    "@typescript-eslint/eslint-plugin": "^7.1.1",
+    "@typescript-eslint/parser": "^7.1.1",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.5",
+    "eslint-plugin-storybook": "^0.8.0"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/leoweyr/react-ide-workspace-layout.git"
+  }
+}
