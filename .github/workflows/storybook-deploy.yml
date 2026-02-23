@@ -14,6 +14,11 @@ env:
 jobs:
     deploy-storybook:
         runs-on: ubuntu-latest
+
+        environment:
+          name: ${{ github.ref == 'refs/heads/main' && 'Production - storybook' || 'Preview - storybook' }}
+          url: ${{ steps.deploy-prod.outputs.url || steps.deploy-preview.outputs.url }}
+
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
@@ -35,16 +40,20 @@ jobs:
 
             - name: Deploy to Vercel (Production)
               if: github.ref == 'refs/heads/main'
+              id: deploy-prod
               run: |
                   cp -r .vercel storybook-static/.vercel
                   cp vercel.json storybook-static/vercel.json
                   cd storybook-static
-                  npx vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }}
+                  DEPLOY_URL=$(npx vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }})
+                  echo "url=$DEPLOY_URL" >> $GITHUB_OUTPUT
 
             - name: Deploy to Vercel (Preview)
               if: github.ref != 'refs/heads/main'
+              id: deploy-preview
               run: |
                   cp -r .vercel storybook-static/.vercel
                   cp vercel.json storybook-static/vercel.json
                   cd storybook-static
-                  npx vercel deploy --token=${{ secrets.VERCEL_TOKEN }}
+                  DEPLOY_URL=$(npx vercel deploy --token=${{ secrets.VERCEL_TOKEN }})
+                  echo "url=$DEPLOY_URL" >> $GITHUB_OUTPUT
