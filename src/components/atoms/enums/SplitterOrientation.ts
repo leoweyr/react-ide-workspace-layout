@@ -4,4 +4,4 @@ export const SplitterOrientation = {
 } as const;
 
 
-export type SplitterOrientation= typeof SplitterOrientation[keyof typeof SplitterOrientation];
+export type SplitterOrientation = typeof SplitterOrientation[keyof typeof SplitterOrientation];

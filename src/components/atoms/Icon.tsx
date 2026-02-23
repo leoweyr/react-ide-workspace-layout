@@ -68,3 +68,6 @@ export class Icon extends Component<IconProps> {
         }
     }
 }
+
+
+export default Icon;

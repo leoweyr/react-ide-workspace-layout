@@ -131,3 +131,6 @@ export class Button extends Component<ButtonProps, ButtonState> {
         };
     }
 }
+
+
+export default Button;

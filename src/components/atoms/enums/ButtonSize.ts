@@ -5,4 +5,4 @@ export const ButtonSize = {
 } as const;
 
 
-export type ButtonSize= typeof ButtonSize[keyof typeof ButtonSize];
+export type ButtonSize = typeof ButtonSize[keyof typeof ButtonSize];

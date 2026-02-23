@@ -10,8 +10,13 @@ export interface ThemeColors {
     buttonHover: string;
     inputBackground: string;
     inputBorder: string;
+    checkboxBackground: string;
+    checkboxBorder: string;
+    checkboxChecked: string;
     tabActive: string;
     tabInactive: string;
+    progressBarBackground: string;
+    progressBarForeground: string;
     toolbar: string;
     success: string;
     warning: string;
@@ -31,6 +36,8 @@ export interface ThemeSpacing {
 export interface ThemeTypography {
     fontFamily: string;
     fontSize: string;
+    fontSizeSmall: string;
+    fontSizeLarge: string;
     lineHeight: string;
     codeFontFamily: string;
     fontWeight?: string | number;
@@ -49,20 +56,25 @@ export class Theme {
     }
 
     public readonly colors: ThemeColors = {
-        background: '#3c3f41',
-        panelBackground: '#3c3f41',
-        editorBackground: '#2b2b2b',
-        text: '#bbbbbb',
-        textSecondary: '#808080',
-        border: '#646464',
-        selection: '#2f65ca',
-        button: '#4c5052',
-        buttonHover: '#5c6164',
-        inputBackground: '#45494a',
-        inputBorder: '#646464',
-        tabActive: '#2b2b2b',
-        tabInactive: '#3c3f41',
-        toolbar: '#3c3f41',
+        background: '#f2f2f2', // panel / grey15
+        panelBackground: '#f2f2f2', // panel / grey15
+        editorBackground: '#ffffff', // contentBackground / white
+        text: '#000000', // foreground / black
+        textSecondary: '#8c8c8c', // disabledForeground / grey03 (or grey02 #808080)
+        border: '#d1d1d1', // border / grey09
+        selection: '#2675bf', // selectionBackground
+        button: '#ffffff', // standard light button
+        buttonHover: '#dfdfdf', // grey12 (ActionButton.hoverBackground)
+        inputBackground: '#ffffff', // contentBackground / white
+        inputBorder: '#c4c4c4', // componentBorder / grey08
+        checkboxBackground: '#ffffff', // contentBackground
+        checkboxBorder: '#c4c4c4', // componentBorder
+        checkboxChecked: '#2675bf', // selectionBackground
+        tabActive: '#ffffff', // EditorTabs.underlinedTabBackground
+        tabInactive: '#f2f2f2', // panel
+        progressBarBackground: '#c4c4c4', // grey08 (approx track)
+        progressBarForeground: '#2675bf', // selectionBackground
+        toolbar: '#f2f2f2', // panel
         success: '#629755',
         warning: '#bf8803',
         error: '#cc0000',
@@ -79,6 +91,8 @@ export class Theme {
     public readonly typography: ThemeTypography = {
         fontFamily: '"Segoe UI", "Inter", "Roboto", sans-serif',
         fontSize: '12px',
+        fontSizeSmall: '10px',
+        fontSizeLarge: '14px',
         lineHeight: '1.5',
         codeFontFamily: '"JetBrains Mono", "Fira Code", monospace',
     };

@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { Input } from '../components/atoms/Input';
+import { IconName } from '../components/atoms/enums/IconName';
 
 
 const meta = {
@@ -10,7 +11,10 @@ const meta = {
     argTypes: {
         value: { control: 'text' },
         placeholder: { control: 'text' },
-        icon: { control: 'select', options: ['search', 'file', 'settings'] },
+        icon: { 
+            control: 'select', 
+            options: [IconName.SEARCH, IconName.FILE, IconName.SETTINGS, IconName.FOLDER, IconName.CLOSE, IconName.EXPAND, IconName.COLLAPSE, IconName.MENU] 
+        },
         fullWidth: { control: 'boolean' },
         borderless: { control: 'boolean' },
     },
@@ -28,7 +32,7 @@ export const Default: Story = {
 export const WithIcon: Story = {
     args: {
         placeholder: 'Search...',
-        icon: 'search',
+        icon: IconName.SEARCH,
     },
 };
 

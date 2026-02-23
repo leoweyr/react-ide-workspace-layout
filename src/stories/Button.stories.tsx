@@ -1,6 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { Button } from '../components/atoms/Button';
+import { ButtonVariant } from '../components/atoms/enums/ButtonVariant';
+import { ButtonSize } from '../components/atoms/enums/ButtonSize';
+import { IconName } from '../components/atoms/enums/IconName';
 
 
 const meta = {
@@ -9,9 +12,18 @@ const meta = {
     tags: ['autodocs'],
     argTypes: {
         text: { control: 'text' },
-        icon: { control: 'select', options: ['close', 'expand', 'collapse', 'folder', 'file', 'search', 'settings', 'menu'] },
-        variant: { control: 'select', options: ['primary', 'default', 'icon', 'ghost'] },
-        size: { control: 'select', options: ['sm', 'md', 'lg'] },
+        icon: { 
+            control: 'select', 
+            options: [IconName.SEARCH, IconName.FILE, IconName.SETTINGS, IconName.FOLDER, IconName.CLOSE, IconName.EXPAND, IconName.COLLAPSE, IconName.MENU] 
+        },
+        variant: { 
+            control: 'select', 
+            options: [ButtonVariant.PRIMARY, ButtonVariant.DEFAULT, ButtonVariant.ICON, ButtonVariant.GHOST] 
+        },
+        size: { 
+            control: 'select', 
+            options: [ButtonSize.SMALL, ButtonSize.MEDIUM, ButtonSize.LARGE] 
+        },
         disabled: { control: 'boolean' },
         active: { control: 'boolean' },
         tooltip: { control: 'text' },
@@ -24,29 +36,29 @@ type Story = StoryObj<typeof meta>;
 export const Primary: Story = {
     args: {
         text: 'Commit',
-        variant: 'primary',
+        variant: ButtonVariant.PRIMARY,
     },
 };
 
 export const Default: Story = {
     args: {
         text: 'Cancel',
-        variant: 'default',
+        variant: ButtonVariant.DEFAULT,
     },
 };
 
 export const Ghost: Story = {
     args: {
         text: 'Run',
-        icon: 'expand',
-        variant: 'ghost',
+        icon: IconName.EXPAND,
+        variant: ButtonVariant.GHOST,
     },
 };
 
 export const IconOnly: Story = {
     args: {
-        icon: 'settings',
-        variant: 'icon',
+        icon: IconName.SETTINGS,
+        variant: ButtonVariant.ICON,
         tooltip: 'Settings',
     },
 };
@@ -54,23 +66,23 @@ export const IconOnly: Story = {
 export const Small: Story = {
     args: {
         text: 'OK',
-        variant: 'primary',
-        size: 'sm',
+        variant: ButtonVariant.PRIMARY,
+        size: ButtonSize.SMALL,
     },
 };
 
 export const Large: Story = {
     args: {
         text: 'Big Action',
-        variant: 'default',
-        size: 'lg',
+        variant: ButtonVariant.DEFAULT,
+        size: ButtonSize.LARGE,
     },
 };
 
 export const Disabled: Story = {
     args: {
         text: 'Disabled',
-        variant: 'default',
+        variant: ButtonVariant.DEFAULT,
         disabled: true,
     },
 };

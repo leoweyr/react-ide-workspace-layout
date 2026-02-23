@@ -10,4 +10,4 @@ export const IconName = {
 } as const;
 
 
-export type IconName= typeof IconName[keyof typeof IconName];
+export type IconName = typeof IconName[keyof typeof IconName];

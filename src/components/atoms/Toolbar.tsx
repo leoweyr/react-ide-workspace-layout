@@ -43,3 +43,6 @@ export class Toolbar extends Component<ToolbarProps> {
         };
     }
 }
+
+
+export default Toolbar;

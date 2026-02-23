@@ -1,67 +1,88 @@
-import { MouseEvent, CSSProperties, Component, ReactNode } from 'react';
+import { Component, ReactNode, CSSProperties, MouseEvent } from 'react';
 
-import { SplitterOrientation } from './enums/SplitterOrientation';
 import { Theme } from '../../theme/Theme';
+import { SplitterOrientation } from './enums/SplitterOrientation';
 
 
 export interface SplitterProps {
     orientation?: SplitterOrientation;
-    onResize?: (delta: number) => void;
-    size?: number;
+    firstComponent?: ReactNode;
+    secondComponent?: ReactNode;
+    proportion?: number;
+    minProportion?: number;
+    maxProportion?: number;
+    onChange?: (proportion: number) => void;
     className?: string;
     style?: CSSProperties;
 }
 
+
 export interface SplitterState {
+    proportion: number;
     isDragging: boolean;
-    isHovered: boolean;
 }
 
+
 export class Splitter extends Component<SplitterProps, SplitterState> {
-    private startPos: number = 0;
+    public static defaultProps = {
+        orientation: SplitterOrientation.VERTICAL,
+        proportion: 0.5,
+        minProportion: 0.1,
+        maxProportion: 0.9,
+    };
+
+    private containerRef: HTMLDivElement | null = null;
 
     private handleMouseDown: (event: MouseEvent) => void = (event: MouseEvent): void => {
         event.preventDefault();
-        this.startPos = this.props.orientation === SplitterOrientation.HORIZONTAL ? event.clientY : event.clientX;
         this.setState({ isDragging: true });
         this.addListeners();
-        document.body.style.cursor = this.props.orientation === SplitterOrientation.HORIZONTAL ? 'row-resize' : 'col-resize';
     };
 
     private handleMouseMove: (event: globalThis.MouseEvent) => void = (event: globalThis.MouseEvent): void => {
-        if (!this.state.isDragging) return;
-    
-        const currentPos: number = this.props.orientation === SplitterOrientation.HORIZONTAL ? event.clientY : event.clientX;
-        const delta: number = currentPos - this.startPos;
-    
-        if (this.props.onResize) {
-            this.props.onResize(delta);
+        if (!this.state.isDragging || !this.containerRef) return;
+
+        const { orientation, minProportion = 0.1, maxProportion = 0.9, onChange } = this.props;
+        const rect = this.containerRef.getBoundingClientRect();
+        
+        let newProportion: number;
+        
+        if (orientation === SplitterOrientation.HORIZONTAL) {
+            const relativeY = event.clientY - rect.top;
+            newProportion = relativeY / rect.height;
+        } else {
+            const relativeX = event.clientX - rect.left;
+            newProportion = relativeX / rect.width;
         }
-    
-        this.startPos = currentPos;
+
+        // Clamp proportion.
+        newProportion = Math.max(minProportion, Math.min(maxProportion, newProportion));
+
+        this.setState({ proportion: newProportion });
+
+        if (onChange) {
+            onChange(newProportion);
+        }
     };
 
     private handleMouseUp: () => void = (): void => {
         this.setState({ isDragging: false });
         this.removeListeners();
-        document.body.style.cursor = '';
-    };
-
-    private handleMouseEnter: () => void = (): void => {
-        this.setState({ isHovered: true });
-    };
-
-    private handleMouseLeave: () => void = (): void => {
-        this.setState({ isHovered: false });
     };
 
     constructor(props: SplitterProps) {
         super(props);
 
         this.state = {
+            proportion: props.proportion ?? 0.5,
             isDragging: false,
-            isHovered: false,
         };
+    }
+
+    public componentDidUpdate(prevProps: SplitterProps): void {
+        if (prevProps.proportion !== this.props.proportion && this.props.proportion !== undefined) {
+            this.setState({ proportion: this.props.proportion });
+        }
     }
 
     public componentWillUnmount(): void {
@@ -69,14 +90,64 @@ export class Splitter extends Component<SplitterProps, SplitterState> {
     }
 
     public render(): ReactNode {
+        const { orientation, firstComponent, secondComponent, className, style } = this.props;
+        const { proportion, isDragging } = this.state;
+        const theme = Theme.getInstance();
+
+        const isHorizontal = orientation === SplitterOrientation.HORIZONTAL;
+        const firstSize = `${proportion * 100}%`;
+        const secondSize = `${(1 - proportion) * 100}%`;
+
+        const containerStyle: CSSProperties = {
+            display: 'flex',
+            flexDirection: isHorizontal ? 'column' : 'row',
+            width: '100%',
+            height: '100%',
+            overflow: 'hidden',
+            userSelect: isDragging ? 'none' : 'auto',
+            ...style,
+        };
+
+        const dividerStyle: CSSProperties = {
+            flex: '0 0 1px',
+            backgroundColor: theme.colors.border,
+            cursor: isHorizontal ? 'row-resize' : 'col-resize',
+            position: 'relative',
+            zIndex: 1,
+        };
+
+        // Invisible drag handle for easier grabbing.
+        const handleOverlayStyle: CSSProperties = {
+            position: 'absolute',
+            top: isHorizontal ? '-4px' : '0',
+            bottom: isHorizontal ? '-4px' : '0',
+            left: isHorizontal ? '0' : '-4px',
+            right: isHorizontal ? '0' : '-4px',
+            cursor: isHorizontal ? 'row-resize' : 'col-resize',
+            zIndex: 2,
+        };
+
         return (
-            <div
-                className={this.props.className}
-                style={this.getStyles()}
-                onMouseDown={this.handleMouseDown}
-                onMouseEnter={this.handleMouseEnter}
-                onMouseLeave={this.handleMouseLeave}
-            />
+            <div 
+                ref={(ref) => this.containerRef = ref} 
+                className={className} 
+                style={containerStyle}
+            >
+                <div style={{ flex: `0 0 ${firstSize}`, overflow: 'auto' }}>
+                    {firstComponent}
+                </div>
+
+                <div 
+                    style={dividerStyle}
+                    onMouseDown={this.handleMouseDown}
+                >
+                    <div style={handleOverlayStyle} />
+                </div>
+
+                <div style={{ flex: 1, overflow: 'auto' }}>
+                    {secondComponent}
+                </div>
+            </div>
         );
     }
 
@@ -89,24 +160,7 @@ export class Splitter extends Component<SplitterProps, SplitterState> {
         document.removeEventListener('mousemove', this.handleMouseMove);
         document.removeEventListener('mouseup', this.handleMouseUp);
     }
-
-    private getStyles(): CSSProperties {
-        const theme = Theme.getInstance();
-        const { orientation = SplitterOrientation.VERTICAL, size = 4, style } = this.props;
-        const { isDragging, isHovered } = this.state;
-
-        const isHorizontal: boolean = orientation === SplitterOrientation.HORIZONTAL;
-    
-        return {
-            width: isHorizontal ? '100%' : size,
-            height: isHorizontal ? size : '100%',
-            backgroundColor: (isDragging || isHovered) ? theme.colors.selection : theme.colors.border,
-            cursor: isHorizontal ? 'row-resize' : 'col-resize',
-            zIndex: 10,
-            opacity: (isDragging || isHovered) ? 1 : 0.5,
-            transition: 'background-color 0.1s, opacity 0.1s',
-            userSelect: 'none',
-            ...style,
-        };
-    }
 }
+
+
+export default Splitter;

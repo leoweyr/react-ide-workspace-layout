@@ -4,4 +4,4 @@ export const ToolbarOrientation = {
 } as const;
 
 
-export type ToolbarOrientation= typeof ToolbarOrientation[keyof typeof ToolbarOrientation];
+export type ToolbarOrientation = typeof ToolbarOrientation[keyof typeof ToolbarOrientation];

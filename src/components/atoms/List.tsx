@@ -85,3 +85,6 @@ export class List extends Component<ListProps> {
         );
     }
 }
+
+
+export default List;

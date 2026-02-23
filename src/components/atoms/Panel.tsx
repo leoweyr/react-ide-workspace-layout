@@ -14,6 +14,7 @@ export interface PanelProps {
     style?: CSSProperties;
 }
 
+
 export class Panel extends Component<PanelProps> {
     public render(): ReactNode {
         const { children, className } = this.props;
@@ -52,3 +53,6 @@ export class Panel extends Component<PanelProps> {
         };
     }
 }
+
+
+export default Panel;

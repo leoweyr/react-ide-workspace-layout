@@ -6,4 +6,4 @@ export const ButtonVariant = {
 } as const;
 
 
-export type ButtonVariant= typeof ButtonVariant[keyof typeof ButtonVariant];
+export type ButtonVariant = typeof ButtonVariant[keyof typeof ButtonVariant];

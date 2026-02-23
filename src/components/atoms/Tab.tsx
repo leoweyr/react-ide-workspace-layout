@@ -108,7 +108,7 @@ export class Tab extends Component<TabProps, TabState> {
                                   height: 16,
                               }}
                           >
-                              <Icon name="close" size={10} color={theme.colors.text} />
+                              <Icon name={IconName.CLOSE} size={10} color={theme.colors.text} />
                           </div>
                     )
                 )}
@@ -154,3 +154,6 @@ export class Tab extends Component<TabProps, TabState> {
         };
     }
 }
+
+
+export default Tab;
