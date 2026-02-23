@@ -37,6 +37,7 @@ jobs:
               if: github.ref == 'refs/heads/main'
               run: |
                   cp -r .vercel storybook-static/.vercel
+                  cp vercel.json storybook-static/vercel.json
                   cd storybook-static
                   npx vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }}
 
@@ -44,5 +45,6 @@ jobs:
               if: github.ref != 'refs/heads/main'
               run: |
                   cp -r .vercel storybook-static/.vercel
+                  cp vercel.json storybook-static/vercel.json
                   cd storybook-static
                   npx vercel deploy --token=${{ secrets.VERCEL_TOKEN }}
