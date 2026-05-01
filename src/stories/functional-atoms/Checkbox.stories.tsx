@@ -4,7 +4,7 @@ import Checkbox from '../../components/functional-atoms/Checkbox';
 
 
 const meta = {
-    title: 'Atoms/Checkbox',
+    title: 'Functional Atoms/Checkbox',
     component: Checkbox,
     tags: ['autodocs'],
     argTypes: {

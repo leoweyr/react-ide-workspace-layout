@@ -5,7 +5,7 @@ import Button from '../../components/style-atoms/Button';
 
 
 const meta = {
-    title: 'Atoms/Toolbar',
+    title: 'Style Atoms/Toolbar',
     component: Toolbar,
     tags: ['autodocs'],
     argTypes: {

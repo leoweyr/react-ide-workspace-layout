@@ -4,7 +4,7 @@ import List from '../../components/functional-atoms/List';
 
 
 const meta = {
-    title: 'Atoms/List',
+    title: 'Functional Atoms/List',
     component: List,
     tags: ['autodocs'],
     argTypes: {

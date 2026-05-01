@@ -6,7 +6,7 @@ import { IconName } from '../../components/style-atoms/enums/IconName';
 
 
 const meta = {
-    title: 'Atoms/TabbedPane',
+    title: 'Functional Atoms/TabbedPane',
     component: TabbedPane,
     tags: ['autodocs'],
     argTypes: {

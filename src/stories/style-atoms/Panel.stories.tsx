@@ -7,7 +7,7 @@ import Panel from '../../components/style-atoms/Panel';
 const theme = Theme.getInstance();
 
 const meta = {
-    title: 'Atoms/Panel',
+    title: 'Style Atoms/Panel',
     component: Panel,
     tags: ['autodocs'],
     argTypes: {

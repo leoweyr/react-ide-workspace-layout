@@ -4,7 +4,7 @@ import ProgressBar from '../../components/style-atoms/ProgressBar';
 
 
 const meta = {
-    title: 'Atoms/ProgressBar',
+    title: 'Style Atoms/ProgressBar',
     component: ProgressBar,
     tags: ['autodocs'],
     argTypes: {

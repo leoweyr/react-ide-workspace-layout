@@ -8,7 +8,7 @@ import { IconName } from '../../components/style-atoms/enums/IconName';
 
 
 const meta = {
-    title: 'Atoms/Label',
+    title: 'Style Atoms/Label',
     component: Label,
     tags: ['autodocs'],
     argTypes: {

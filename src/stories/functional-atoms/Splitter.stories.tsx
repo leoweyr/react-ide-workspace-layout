@@ -7,7 +7,7 @@ import Panel from '../../components/style-atoms/Panel';
 
 
 const meta = {
-    title: 'Atoms/Splitter',
+    title: 'Functional Atoms/Splitter',
     component: Splitter,
     tags: ['autodocs'],
     argTypes: {

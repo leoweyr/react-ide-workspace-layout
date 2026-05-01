@@ -5,7 +5,7 @@ import { IconName } from '../../components/style-atoms/enums/IconName';
 
 
 const meta = {
-    title: 'Atoms/Input',
+    title: 'Functional Atoms/Input',
     component: Input,
     tags: ['autodocs'],
     argTypes: {

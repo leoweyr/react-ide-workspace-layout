@@ -4,7 +4,7 @@ import Icon from '../../components/style-atoms/Icon';
 
 
 const meta = {
-    title: 'Atoms/Icon',
+    title: 'Style Atoms/Icon',
     component: Icon,
     tags: ['autodocs'],
     argTypes: {

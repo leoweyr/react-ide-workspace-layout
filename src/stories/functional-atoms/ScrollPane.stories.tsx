@@ -5,7 +5,7 @@ import ScrollPane from '../../components/functional-atoms/ScrollPane';
 
 
 const meta = {
-    title: 'Atoms/ScrollPane',
+    title: 'Functional Atoms/ScrollPane',
     component: ScrollPane,
     tags: ['autodocs'],
     decorators: [

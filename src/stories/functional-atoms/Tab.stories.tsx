@@ -4,7 +4,7 @@ import Tab from '../../components/functional-atoms/Tab';
 
 
 const meta = {
-    title: 'Atoms/Tab',
+    title: 'Functional Atoms/Tab',
     component: Tab,
     tags: ['autodocs'],
     argTypes: {
