@@ -1,6 +1,6 @@
 import { Component, ReactNode, CSSProperties } from 'react';
 
-import { Theme } from '../../theme/Theme';
+import { Theme } from '../../features/theme/Theme';
 
 
 interface ScrollPaneContainerProps {
@@ -20,7 +20,7 @@ class ScrollPaneContainer extends Component<ScrollPaneContainerProps> {
         const containerStyle: CSSProperties = {
             position: 'relative',
             overflow: 'hidden',
-            backgroundColor: theme.colors.background,
+            backgroundColor: theme.colors.neutral.background,
             ...style,
         };
 

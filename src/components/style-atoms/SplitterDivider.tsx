@@ -1,6 +1,6 @@
 import { Component, ReactNode, CSSProperties, MouseEvent } from 'react';
 
-import { Theme } from '../../theme/Theme';
+import { Theme } from '../../features/theme/Theme';
 import { SplitterOrientation } from './enums/SplitterOrientation';
 
 
@@ -17,8 +17,8 @@ class SplitterDivider extends Component<SplitterDividerProps> {
         const isHorizontal = orientation === SplitterOrientation.HORIZONTAL;
 
         const dividerStyle: CSSProperties = {
-            flex: '0 0 1px',
-            backgroundColor: theme.colors.border,
+            flex: `0 0 ${theme.layout.sizing.common.borderWidth}`,
+            backgroundColor: theme.colors.neutral.border,
             cursor: isHorizontal ? 'row-resize' : 'col-resize',
             position: 'relative',
             zIndex: 1,

@@ -1,6 +1,6 @@
 import { Component, CSSProperties, ReactNode } from 'react';
 
-import { Theme } from '../../theme/Theme';
+import { Theme } from '../../features/theme/Theme';
 import { IconName } from './enums/IconName';
 import Icon from './Icon';
 
@@ -22,14 +22,13 @@ class ListItem extends Component<ListItemProps> {
         const theme = Theme.getInstance();
 
         const itemStyle: CSSProperties = {
-            padding: `${theme.spacing.xs}px ${theme.spacing.md}px`,
-            paddingLeft: `${theme.spacing.md + depth * 16}px`,
-            cursor: 'pointer',
-            backgroundColor: isSelected ? theme.colors.selection : 'transparent',
-            color: isSelected ? '#ffffff' : theme.colors.text,
+            padding: `${theme.layout.spacing.extraSmall}px ${theme.layout.spacing.medium}px`,
+            paddingLeft: `${theme.layout.spacing.medium + depth * 16}px`,
+            backgroundColor: isSelected ? theme.colors.selection.background : 'transparent',
+            color: isSelected ? '#ffffff' : theme.colors.neutral.text,
             display: 'flex',
             alignItems: 'center',
-            gap: theme.spacing.sm,
+            gap: theme.layout.spacing.small,
             userSelect: 'none',
         };
 

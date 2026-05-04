@@ -1,6 +1,6 @@
 import { Component, ReactNode, CSSProperties, ChangeEvent, FocusEvent, RefObject } from 'react';
 
-import { Theme } from '../../theme/Theme';
+import { Theme } from '../../features/theme/Theme';
 import Icon from './Icon';
 import { IconName } from './enums/IconName';
 
@@ -41,8 +41,8 @@ class Input extends Component<InputProps> {
                     <Icon 
                         name={icon} 
                         size={14} 
-                        color={theme.colors.textSecondary} 
-                        style={{ marginRight: theme.spacing.sm }} 
+                        color={theme.colors.neutral.textSecondary} 
+                        style={{ marginRight: theme.layout.spacing.small }} 
                     />
                 )}
                 <input
@@ -63,21 +63,21 @@ class Input extends Component<InputProps> {
         const theme = Theme.getInstance();
         const { fullWidth, borderless, isFocused, isHovered, style } = this.props;
 
-        let borderColor: string = theme.colors.inputBorder;
+        let borderColor: string = theme.colors.input.border;
 
         if (isFocused) {
-            borderColor = theme.colors.selection;
+            borderColor = theme.colors.selection.background;
         } else if (isHovered && !borderless) {
-            borderColor = theme.colors.textSecondary;
+            borderColor = theme.colors.neutral.textSecondary;
         }
 
         return {
             display: 'flex',
             alignItems: 'center',
-            backgroundColor: theme.colors.inputBackground,
+            backgroundColor: theme.colors.input.background,
             border: borderless ? '1px solid transparent' : `1px solid ${borderColor}`,
-            borderRadius: '2px',
-            padding: `2px ${theme.spacing.sm}px`,
+            borderRadius: theme.layout.sizing.common.borderRadius,
+            padding: `2px ${theme.layout.spacing.small}px`,
             width: fullWidth ? '100%' : 'auto',
             transition: 'border-color 0.2s',
             ...style,
@@ -90,9 +90,9 @@ class Input extends Component<InputProps> {
         return {
             backgroundColor: 'transparent',
             border: 'none',
-            color: theme.colors.text,
-            fontFamily: theme.typography.fontFamily,
-            fontSize: theme.typography.fontSize,
+            color: theme.colors.neutral.text,
+            fontFamily: theme.typography.font.family,
+            fontSize: theme.typography.font.size,
             outline: 'none',
             flex: 1,
             padding: '4px 0',

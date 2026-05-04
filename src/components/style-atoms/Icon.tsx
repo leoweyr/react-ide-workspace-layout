@@ -1,7 +1,7 @@
 import { CSSProperties, MouseEvent, Component, ReactNode } from 'react';
 
 import { IconName } from './enums/IconName';
-import { Theme } from '../../theme/Theme';
+import { Theme } from '../../features/theme/Theme';
 
 
 interface IconProps {
@@ -37,7 +37,7 @@ class Icon extends Component<IconProps> {
         return {
             width: size,
             height: size,
-            fill: color ?? theme.colors.text,
+            fill: color ?? theme.colors.neutral.text,
             display: 'inline-block',
             verticalAlign: 'middle',
             cursor: this.props.onClick ? 'pointer' : 'default',

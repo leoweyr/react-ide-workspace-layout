@@ -1,6 +1,6 @@
 import { Component, ReactNode, CSSProperties, MouseEvent } from 'react';
 
-import { Theme } from '../../theme/Theme';
+import { Theme } from '../../features/theme/Theme';
 import { SplitterOrientation } from './enums/SplitterOrientation';
 
 
@@ -27,8 +27,8 @@ class ScrollbarThumb extends Component<ScrollbarThumbProps> {
             width: isHorizontal ? `${Math.max(sizePercent, 10)}%` : '6px',
             height: isHorizontal ? '6px' : `${Math.max(sizePercent, 10)}%`,
             margin: '2px',
-            backgroundColor: (isDragging || isHovered) ? theme.colors.textSecondary : theme.colors.border,
-            borderRadius: '3px',
+            backgroundColor: (isDragging || isHovered) ? theme.colors.neutral.textSecondary : theme.colors.neutral.border,
+            borderRadius: theme.layout.sizing.common.borderRadius,
             opacity: (isDragging || isHovered) ? 0.8 : 0.4,
             transition: 'opacity 0.2s, background-color 0.2s',
             cursor: 'default',

@@ -1,6 +1,6 @@
 import { ReactNode, CSSProperties, Component } from 'react';
 
-import { Theme } from '../../theme/Theme';
+import { Theme } from '../../features/theme/Theme';
 
 
 interface PanelProps {
@@ -41,14 +41,14 @@ class Panel extends Component<PanelProps> {
             display: 'flex',
             flexDirection: 'column',
             boxSizing: 'border-box',
-            padding: padding ?? theme.spacing.md,
-            backgroundColor: backgroundColor ?? theme.colors.panelBackground,
+            padding: padding ?? theme.layout.spacing.medium,
+            backgroundColor: backgroundColor ?? theme.colors.neutral.panelBackground,
             border: border,
             width: width,
             height: height,
-            color: theme.colors.text,
-            fontFamily: theme.typography.fontFamily,
-            fontSize: theme.typography.fontSize,
+            color: theme.colors.neutral.text,
+            fontFamily: theme.typography.font.family,
+            fontSize: theme.typography.font.size,
             ...style,
         };
     }

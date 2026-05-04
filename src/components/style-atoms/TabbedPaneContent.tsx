@@ -1,6 +1,6 @@
 import { Component, ReactNode, CSSProperties } from 'react';
 
-import { Theme } from '../../theme/Theme';
+import { Theme } from '../../features/theme/Theme';
 
 
 interface TabbedPaneContentProps {
@@ -17,7 +17,7 @@ class TabbedPaneContent extends Component<TabbedPaneContentProps> {
         const contentStyle: CSSProperties = {
             flex: 1,
             overflow: 'auto',
-            backgroundColor: theme.colors.background,
+            backgroundColor: theme.colors.neutral.editorBackground,
             ...style,
         };
 

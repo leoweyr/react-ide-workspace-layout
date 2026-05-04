@@ -1,6 +1,6 @@
 import { Component, ReactNode, CSSProperties, MouseEvent } from 'react';
 
-import { Theme } from '../../theme/Theme';
+import { Theme } from '../../features/theme/Theme';
 import Icon from './Icon';
 import { IconName } from './enums/IconName';
 
@@ -40,8 +40,8 @@ class Tab extends Component<TabProps> {
                     <Icon 
                         name={icon} 
                         size={14} 
-                        color={isActive ? theme.colors.selection : theme.colors.textSecondary}
-                        style={{ marginRight: theme.spacing.md }} 
+                        color={isActive ? theme.colors.selection.background : theme.colors.neutral.textSecondary}
+                        style={{ marginRight: theme.layout.spacing.medium }} 
                     />
                 )}
         
@@ -50,7 +50,7 @@ class Tab extends Component<TabProps> {
                     whiteSpace: 'nowrap', 
                     overflow: 'hidden', 
                     textOverflow: 'ellipsis',
-                    marginRight: theme.spacing.md
+                    marginRight: theme.layout.spacing.medium
                 }}>
                     {title}
                 </span>
@@ -60,7 +60,7 @@ class Tab extends Component<TabProps> {
                         width: 8,
                         height: 8,
                         borderRadius: '50%',
-                        backgroundColor: theme.colors.textSecondary,
+                        backgroundColor: theme.colors.neutral.textSecondary,
                     }} />
                 ) : (
                     (onClose || isHovered) && (
@@ -70,8 +70,8 @@ class Tab extends Component<TabProps> {
                             onClick={(event) => { event.stopPropagation(); onClose && onClose(event); }}
                             style={{
                                 opacity: isHovered || isActive ? 1 : 0,
-                                borderRadius: '3px',
-                                backgroundColor: isCloseHovered ? theme.colors.buttonHover : 'transparent',
+                                borderRadius: theme.layout.sizing.common.borderRadius,
+                                backgroundColor: isCloseHovered ? theme.colors.button.fillHover : 'transparent',
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
@@ -79,7 +79,7 @@ class Tab extends Component<TabProps> {
                                 height: 16,
                             }}
                         >
-                            <Icon name={IconName.CLOSE} size={10} color={theme.colors.text} />
+                            <Icon name={IconName.CLOSE} size={10} color={theme.colors.neutral.text} />
                         </div>
                     )
                 )}
@@ -91,31 +91,31 @@ class Tab extends Component<TabProps> {
         const theme = Theme.getInstance();
         const { isActive, isHovered, style } = this.props;
 
-        let bg: string = theme.colors.tabInactive;
-        let color: string = theme.colors.textSecondary;
-        let borderBottom: string = '2px solid transparent';
+        let bg: string = theme.colors.tab.inactiveBackground;
+        let color: string = theme.colors.neutral.textSecondary;
+        let borderBottom: string = `${theme.layout.sizing.common.borderWidth} solid transparent`;
 
         if (isActive) {
-            bg = theme.colors.tabActive;
-            color = theme.colors.text;
-            borderBottom = `2px solid ${theme.colors.selection}`;
+            bg = theme.colors.tab.activeBackground;
+            color = theme.colors.neutral.text;
+            borderBottom = `${theme.layout.sizing.common.borderWidth} solid ${theme.colors.tab.activeUnderline}`;
         } else if (isHovered) {
-            bg = theme.colors.panelBackground;
-            color = theme.colors.text;
+            bg = theme.colors.neutral.panelBackground;
+            color = theme.colors.neutral.text;
         }
 
         return {
             display: 'inline-flex',
             alignItems: 'center',
-            padding: `0 ${theme.spacing.lg}px`,
+            padding: `0 ${theme.layout.spacing.large}px`,
             height: '32px',
             backgroundColor: bg,
             color: color,
-            borderRight: `1px solid ${theme.colors.border}`,
+            borderRight: `${theme.layout.sizing.common.borderWidth} solid ${theme.colors.neutral.border}`,
             borderBottom: borderBottom,
             cursor: 'pointer',
-            fontSize: theme.typography.fontSize,
-            fontFamily: theme.typography.fontFamily,
+            fontSize: theme.typography.font.size,
+            fontFamily: theme.typography.font.family,
             userSelect: 'none',
             transition: 'background-color 0.1s, color 0.1s',
             maxWidth: '200px',

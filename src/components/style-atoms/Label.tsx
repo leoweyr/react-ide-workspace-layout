@@ -1,6 +1,6 @@
 import { Component, ReactNode, CSSProperties } from 'react';
 
-import { Theme } from '../../theme/Theme';
+import { Theme } from '../../features/theme/Theme';
 import { ComponentStyle } from './enums/ComponentStyle';
 import { FontColor } from './enums/FontColor';
 
@@ -82,7 +82,7 @@ class Label extends Component<LabelProps, LabelState> {
         const theme = Theme.getInstance();
 
         return {
-            marginRight: theme.spacing.xs,
+            marginRight: theme.layout.spacing.extraSmall,
             display: 'flex',
             alignItems: 'center',
         };
@@ -95,8 +95,8 @@ class Label extends Component<LabelProps, LabelState> {
         return {
             color: this.getColor(),
             fontSize: this.getFontSize(),
-            fontFamily: theme.typography.fontFamily,
-            lineHeight: theme.typography.lineHeight,
+            fontFamily: theme.typography.font.family,
+            lineHeight: theme.typography.line.height,
             userSelect: copyable ? 'text' : 'none',
             whiteSpace: 'nowrap',
             overflow: 'hidden',
@@ -110,19 +110,19 @@ class Label extends Component<LabelProps, LabelState> {
         const theme = Theme.getInstance();
 
         if (disabled) {
-            return theme.colors.textSecondary;  // Disabled usually looks like secondary/dim.
+            return theme.colors.neutral.textSecondary;  // Disabled usually looks like secondary/dim.
         }
 
         switch (fontColor) {
             case FontColor.BRIGHT:
                 return '#ffffff';  // TODO: Add to Theme.
             case FontColor.DIM:
-                return theme.colors.textSecondary;
+                return theme.colors.neutral.textSecondary;
             case FontColor.ERROR:
-                return theme.colors.error;
+                return theme.colors.status.error;
             case FontColor.NORMAL:
             default:
-                return theme.colors.text;
+                return theme.colors.neutral.text;
         }
     }
 
@@ -132,12 +132,12 @@ class Label extends Component<LabelProps, LabelState> {
 
         switch (componentStyle) {
             case ComponentStyle.SMALL:
-                return theme.typography.fontSizeSmall;
+                return theme.typography.font.sizeSmall;
             case ComponentStyle.LARGE:
-                return theme.typography.fontSizeLarge;
+                return theme.typography.font.sizeLarge;
             case ComponentStyle.REGULAR:
             default:
-                return theme.typography.fontSize;
+                return theme.typography.font.size;
         }
     }
 }

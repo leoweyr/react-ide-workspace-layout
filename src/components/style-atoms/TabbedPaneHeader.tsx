@@ -1,6 +1,6 @@
 import { Component, ReactNode, CSSProperties } from 'react';
 
-import { Theme } from '../../theme/Theme';
+import { Theme } from '../../features/theme/Theme';
 
 
 interface TabbedPaneHeaderProps {
@@ -16,8 +16,8 @@ class TabbedPaneHeader extends Component<TabbedPaneHeaderProps> {
 
         const headerStyle: CSSProperties = {
             display: 'flex',
-            borderBottom: `1px solid ${theme.colors.border}`,
-            backgroundColor: theme.colors.panelBackground,
+            borderBottom: `${theme.layout.sizing.common.borderWidth} solid ${theme.colors.neutral.border}`,
+            backgroundColor: theme.colors.neutral.panelBackground,
             ...style,
         };
 

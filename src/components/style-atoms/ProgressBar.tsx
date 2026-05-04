@@ -1,6 +1,6 @@
 import { Component, CSSProperties, ReactNode } from 'react';
 
-import { Theme } from '../../theme/Theme';
+import { Theme } from '../../features/theme/Theme';
 
 
 interface ProgressBarProps {
@@ -32,8 +32,8 @@ class ProgressBar extends Component<ProgressBarProps> {
         return {
             width: '100%',
             height: '14px',
-            backgroundColor: theme.colors.progressBarBackground,
-            borderRadius: '2px',
+            backgroundColor: theme.colors.progressBar.track,
+            borderRadius: theme.layout.sizing.common.borderRadius,
             overflow: 'hidden',
             position: 'relative',
             display: 'flex',
@@ -49,7 +49,7 @@ class ProgressBar extends Component<ProgressBarProps> {
         return {
             width: `${percentage}%`,
             height: '100%',
-            backgroundColor: theme.colors.progressBarForeground,
+            backgroundColor: theme.colors.progressBar.fill,
             transition: 'width 0.2s ease-in-out',
             position: 'absolute',
             left: 0,
@@ -60,7 +60,7 @@ class ProgressBar extends Component<ProgressBarProps> {
     private getLabelStyles(): CSSProperties {
         const theme = Theme.getInstance();
         return {
-            color: theme.colors.text,
+            color: theme.colors.neutral.text,
             fontSize: '10px',
             lineHeight: '1',
             zIndex: 1,

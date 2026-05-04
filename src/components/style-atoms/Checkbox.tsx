@@ -1,6 +1,6 @@
 import { Component, ReactNode, CSSProperties } from 'react';
 
-import { Theme } from '../../theme/Theme';
+import { Theme } from '../../features/theme/Theme';
 
 
 interface CheckboxProps {
@@ -55,8 +55,8 @@ class Checkbox extends Component<CheckboxProps> {
             cursor: disabled ? 'not-allowed' : 'pointer',
             opacity: disabled ? 0.5 : 1,
             userSelect: 'none',
-            fontSize: theme.typography.fontSize,
-            fontFamily: theme.typography.fontFamily,
+            fontSize: theme.typography.font.size,
+            fontFamily: theme.typography.font.family,
             ...style,
         };
     }
@@ -65,16 +65,16 @@ class Checkbox extends Component<CheckboxProps> {
         const theme = Theme.getInstance();
         const { checked, disabled, isHovered, isFocused } = this.props;
 
-        let borderColor: string = theme.colors.checkboxBorder;
-        let backgroundColor: string = theme.colors.checkboxBackground;
+        let borderColor: string = theme.colors.checkbox.border;
+        let backgroundColor: string = theme.colors.checkbox.background;
 
         if (!disabled && (isHovered || isFocused)) {
-            borderColor = theme.colors.text;
+            borderColor = theme.colors.neutral.text;
         }
 
         if (checked) {
-            backgroundColor = theme.colors.checkboxChecked;
-            borderColor = theme.colors.checkboxChecked;
+            backgroundColor = theme.colors.checkbox.checked;
+            borderColor = theme.colors.checkbox.checked;
         }
 
         return {
@@ -84,16 +84,16 @@ class Checkbox extends Component<CheckboxProps> {
             border: `1px solid ${borderColor}`,
             backgroundColor: backgroundColor,
             position: 'relative',
-            marginRight: theme.spacing.sm,
+            marginRight: theme.layout.spacing.small,
             transition: 'all 0.1s ease-in-out',
-            boxShadow: isFocused ? `0 0 0 2px ${theme.colors.selection}40` : 'none',
+            boxShadow: isFocused ? `0 0 0 2px ${theme.colors.selection.background}40` : 'none',
         };
     }
 
     private getLabelStyles(): CSSProperties {
         const theme = Theme.getInstance();
         return {
-            color: theme.colors.text,
+            color: theme.colors.neutral.text,
             lineHeight: '1',
         };
     }
