@@ -1,5 +1,5 @@
 export { default as Button } from './Button';
-export { default as Icon } from './Icon';
+export { default as Icon } from './icon/Icon';
 export { default as Label } from './Label';
 export { default as Panel } from './Panel';
 export { default as ProgressBar } from './ProgressBar';
@@ -19,5 +19,4 @@ export { default as TabbedPaneContainer } from './TabbedPaneContainer';
 export { default as TabbedPaneContent } from './TabbedPaneContent';
 export { default as TabbedPaneHeader } from './TabbedPaneHeader';
 export { default as Toolbar } from './Toolbar';
-export * from './enums/IconName';
 export * from './enums/SplitterOrientation';

@@ -3,12 +3,13 @@ export * as StyleAtoms from './components/style-atoms';
 
 // Re-export non-conflicting style atoms for convenience
 export { default as Button } from './components/style-atoms/Button';
-export { default as Icon } from './components/style-atoms/Icon';
+export { default as Icon } from './components/style-atoms/icon/Icon';
 export { default as Label } from './components/style-atoms/Label';
 export { default as Panel } from './components/style-atoms/Panel';
 export { default as ProgressBar } from './components/style-atoms/ProgressBar';
 export { default as Toolbar } from './components/style-atoms/Toolbar';
 export { IconName } from './components/style-atoms/enums/IconName';
+export { Size } from './components/style-atoms/enums/Size';
 export { SplitterOrientation } from './components/style-atoms/enums/SplitterOrientation';
 
 export { default as ListItem } from './components/style-atoms/ListItem';
