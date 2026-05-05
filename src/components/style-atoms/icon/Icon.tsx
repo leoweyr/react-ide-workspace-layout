@@ -1,11 +1,10 @@
 import { CSSProperties, Component, ReactNode } from 'react';
 
 import { Size } from '../enums/Size';
-import { Theme } from '../../../features/theme/Theme';
 
 
 interface IconProps {
-    name: string
+    name?: string;
     svg: string;
     size?: Size;
     color?: string;
@@ -17,6 +16,17 @@ interface IconProps {
 class Icon extends Component<IconProps> {
     public render(): ReactNode {
         const { className, svg } = this.props;
+
+        // Handle raw SVG source strings.
+        if (svg.trim().startsWith('<svg')) {
+            return (
+                <span
+                    className={className}
+                    style={this.getStyles()}
+                    dangerouslySetInnerHTML={{ __html: svg }}
+                />
+            );
+        }
 
         return (
             <svg
@@ -30,8 +40,7 @@ class Icon extends Component<IconProps> {
     }
 
     private getStyles(): CSSProperties {
-        const theme: Theme = Theme.getInstance();
-        const { size = Size.MEDIUM, color, style } = this.props;
+        const { size, color, style } = this.props;
 
         let finalSize: number;
 
@@ -45,14 +54,19 @@ class Icon extends Component<IconProps> {
             case Size.LARGE:
                 finalSize = 20;
                 break;
+            default:
+                finalSize = 16;
         }
 
         return {
             width: finalSize,
             height: finalSize,
-            fill: color ?? theme.colors.neutral.text,
-            display: 'inline-block',
+            fill: color ?? 'currentColor',
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
             verticalAlign: 'middle',
+            flexShrink: 0,
             ...style,
         };
     }
