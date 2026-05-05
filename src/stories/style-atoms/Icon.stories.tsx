@@ -1,22 +1,27 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import Icon from '../../components/style-atoms/icon/Icon';
-import { Size } from '../../components/style-atoms';
-import ai from '../../components/style-atoms/icon/schema/ai.json';
-import build from '../../components/style-atoms/icon/schema/build.json';
-import close from '../../components/style-atoms/icon/schema/close.json';
-import collapse from '../../components/style-atoms/icon/schema/collapse.json';
-import database from '../../components/style-atoms/icon/schema/database.json';
-import expand from '../../components/style-atoms/icon/schema/expand.json';
-import file from '../../components/style-atoms/icon/schema/file.json';
-import folder from '../../components/style-atoms/icon/schema/folder.json';
-import menu from '../../components/style-atoms/icon/schema/menu.json';
-import notifications from '../../components/style-atoms/icon/schema/notifications.json';
-import problems from '../../components/style-atoms/icon/schema/problems.json';
-import search from '../../components/style-atoms/icon/schema/search.json';
-import services from '../../components/style-atoms/icon/schema/services.json';
-import settings from '../../components/style-atoms/icon/schema/settings.json';
-import terminal from '../../components/style-atoms/icon/schema/terminal.json';
+import { 
+    Icon, 
+    Size, 
+    ai, 
+    build, 
+    close, 
+    collapse, 
+    database, 
+    debug, 
+    expand, 
+    file, 
+    folder, 
+    git, 
+    menu, 
+    notifications, 
+    problems, 
+    run, 
+    search, 
+    services, 
+    settings, 
+    terminal 
+} from '../../components/style-atoms';
 
 
 const meta = {
@@ -78,6 +83,14 @@ export const Database: Story = {
     },
 };
 
+export const Debug: Story = {
+    args: {
+        name: 'debug',
+        svg: debug.path,
+        size: Size.MEDIUM,
+    },
+};
+
 export const Expand: Story = {
     args: {
         name: 'expand',
@@ -102,6 +115,14 @@ export const Folder: Story = {
     },
 };
 
+export const Git: Story = {
+    args: {
+        name: 'git',
+        svg: git.path,
+        size: Size.MEDIUM,
+    },
+};
+
 export const Menu: Story = {
     args: {
         name: 'menu',
@@ -122,6 +143,14 @@ export const Problems: Story = {
     args: {
         name: 'problems',
         svg: problems.path,
+        size: Size.MEDIUM,
+    },
+};
+
+export const Run: Story = {
+    args: {
+        name: 'run',
+        svg: run.path,
         size: Size.MEDIUM,
     },
 };
