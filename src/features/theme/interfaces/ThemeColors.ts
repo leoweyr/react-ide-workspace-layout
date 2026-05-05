@@ -35,6 +35,11 @@ interface ThemeColors {
     toolbar: {
         background: string;
     };
+    tooltip: {
+        background: string;
+        text: string;
+        border: string;
+    };
     status: {
         success: string;
         warning: string;

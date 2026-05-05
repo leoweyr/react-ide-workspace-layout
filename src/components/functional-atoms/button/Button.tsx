@@ -1,6 +1,6 @@
 import { MouseEvent, CSSProperties, Component, ReactNode, cloneElement, isValidElement, ReactElement } from 'react';
 
-import { Icon, Size } from '../../style-atoms';
+import { Icon, Size, Tooltip } from '../../style-atoms';
 import { ButtonVariant } from './enums/ButtonVariant';
 import { Theme } from '../../../features/theme/Theme';
 
@@ -57,14 +57,13 @@ class Button extends Component<ButtonProps, ButtonState> {
     public render(): ReactNode {
         const { text, icon, onClick, tooltip, className, size, disabled } = this.props;
 
-        return (
+        const buttonElement: ReactNode = (
             <button
                 className={className}
                 style={this.getStyles()}
                 onClick={disabled ? undefined : onClick}
                 onMouseEnter={this.handleMouseEnter}
                 onMouseLeave={this.handleMouseLeave}
-                title={tooltip}
                 disabled={disabled}
             >
                 {icon && isValidElement(icon) ? cloneElement(icon as any, { 
@@ -73,6 +72,14 @@ class Button extends Component<ButtonProps, ButtonState> {
                 {text && <span>{text}</span>}
             </button>
         );
+
+        if (tooltip) {
+            return (
+                <Tooltip text={tooltip} anchor={buttonElement} />
+            );
+        }
+
+        return buttonElement;
     }
 
     private getStyles(): CSSProperties {
@@ -123,7 +130,7 @@ class Button extends Component<ButtonProps, ButtonState> {
                 padding = `${paddingY}px`;
 
                 break;
-
+            case ButtonVariant.DEFAULT:
             default:
                 bg = isHovered ? theme.colors.button.fillHover : theme.colors.button.fill;
                 color = theme.colors.neutral.text;

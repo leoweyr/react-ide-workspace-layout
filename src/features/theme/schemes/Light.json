@@ -36,6 +36,11 @@
         "toolbar": {
             "background": "#f2f2f2"
         },
+        "tooltip": {
+            "background": "#3b3b3b",
+            "text": "#ffffff",
+            "border": "#5c5c5c"
+        },
         "status": {
             "success": "#629755",
             "warning": "#bf8803",
