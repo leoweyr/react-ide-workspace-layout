@@ -1,4 +1,4 @@
-export { default as Icon } from './icon/Icon';
+export * from './icon';
 export { default as Label } from './Label';
 export { default as Panel } from './Panel';
 export { default as ProgressBar } from './ProgressBar';

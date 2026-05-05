@@ -1,26 +1,28 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { Icon, Size } from '../../components/style-atoms';
+import { 
+    Icon, 
+    Size, 
+    ai, 
+    build, 
+    close, 
+    collapse, 
+    database, 
+    debug, 
+    expand, 
+    file, 
+    folder, 
+    git, 
+    menu, 
+    notifications, 
+    problems, 
+    run, 
+    search, 
+    services, 
+    settings, 
+    terminal 
+} from '../../components/style-atoms';
 import { Button, ButtonVariant } from '../../components/functional-atoms';
-
-import ai from '../../components/style-atoms/icon/schema/ai.json';
-import build from '../../components/style-atoms/icon/schema/build.json';
-import close from '../../components/style-atoms/icon/schema/close.json';
-import collapse from '../../components/style-atoms/icon/schema/collapse.json';
-import database from '../../components/style-atoms/icon/schema/database.json';
-import debug from '../../components/style-atoms/icon/schema/debug.json';
-import expand from '../../components/style-atoms/icon/schema/expand.json';
-import file from '../../components/style-atoms/icon/schema/file.json';
-import folder from '../../components/style-atoms/icon/schema/folder.json';
-import git from '../../components/style-atoms/icon/schema/git.json';
-import menu from '../../components/style-atoms/icon/schema/menu.json';
-import notifications from '../../components/style-atoms/icon/schema/notifications.json';
-import problems from '../../components/style-atoms/icon/schema/problems.json';
-import run from '../../components/style-atoms/icon/schema/run.json';
-import search from '../../components/style-atoms/icon/schema/search.json';
-import services from '../../components/style-atoms/icon/schema/services.json';
-import settings from '../../components/style-atoms/icon/schema/settings.json';
-import terminal from '../../components/style-atoms/icon/schema/terminal.json';
 
 
 const ICON_MAP = {
@@ -147,7 +149,7 @@ export const Large: Story = {
 
 export const LongText: Story = {
     args: {
-        text: 'This is a very long button text to test the layout and horizontal expansion of the component.',
+        text: 'This is a very long button text to test the layout and horizontal expansion of the component',
         variant: ButtonVariant.DEFAULT,
     },
 };
