@@ -1,7 +1,7 @@
 import { MouseEvent, CSSProperties, Component, ReactNode, cloneElement, isValidElement, ReactElement } from 'react';
 
 import { Icon, Size } from '../../style-atoms';
-import { Tooltip } from '..';
+import { Tooltip } from '../tooltip';
 import { ButtonVariant } from './enums/ButtonVariant';
 import { Theme } from '../../../features/theme/Theme';
 
@@ -25,7 +25,11 @@ interface ButtonProps {
      */
     active?: boolean;
 
-    tooltip?: string;
+    /**
+     * An optional tooltip element to display on hover.
+     */
+    tooltip?: ReactElement<any, typeof Tooltip>;
+
     className?: string;
     style?: CSSProperties;
 }
@@ -74,10 +78,10 @@ class Button extends Component<ButtonProps, ButtonState> {
             </button>
         );
 
-        if (tooltip) {
-            return (
-                <Tooltip text={tooltip} anchor={buttonElement} />
-            );
+        if (tooltip && isValidElement(tooltip)) {
+            return cloneElement(tooltip as any, { 
+                anchor: buttonElement 
+            });
         }
 
         return buttonElement;

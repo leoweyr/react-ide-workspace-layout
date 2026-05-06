@@ -6,7 +6,7 @@ import { TooltipPosition } from './enums/TooltipPosition';
 
 interface TooltipProps {
     text: string;
-    anchor: ReactNode;
+    anchor?: ReactNode;
 
     /**
      * The placement of the tooltip relative to the anchor.

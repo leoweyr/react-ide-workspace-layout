@@ -22,7 +22,7 @@ import {
     settings, 
     terminal 
 } from '../../components/style-atoms';
-import { Button, ButtonVariant } from '../../components/functional-atoms';
+import { Button, ButtonVariant, Tooltip } from '../../components/functional-atoms';
 
 
 const ICON_MAP = {
@@ -69,7 +69,7 @@ const meta = {
         },
         disabled: { control: 'boolean' },
         active: { control: 'boolean' },
-        tooltip: { control: 'text' },
+        tooltip: { control: 'object' },
         onClick: { action: 'clicked' },
     },
 } satisfies Meta<typeof Button>;
@@ -110,7 +110,7 @@ export const IconOnly: Story = {
     args: {
         icon: <Icon name="settings" svg={settings.path} />,
         variant: ButtonVariant.ICON,
-        tooltip: 'Settings',
+        tooltip: <Tooltip text="Settings" />,
     },
 };
 
