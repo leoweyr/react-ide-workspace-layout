@@ -1,7 +1,5 @@
-import { ReactElement } from 'react';
-import type { Meta, StoryObj, StoryFn } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 
-import { IconButton, Tooltip } from '../../../components/functional-atoms';
 import {
     Icon,
     Size,
@@ -19,6 +17,7 @@ import {
     settings,
     terminal
 } from '../../../components/style-atoms';
+import { DropDownMenuButton, Tooltip } from '../../../components/functional-atoms';
 
 
 const ICON_MAP = {
@@ -38,10 +37,11 @@ const ICON_MAP = {
 };
 
 const meta = {
-    title: 'Functional Atoms/IconButton',
-    component: IconButton,
+    title: 'Functional Atoms/DropDownMenuButton',
+    component: DropDownMenuButton,
     tags: ['autodocs'],
     argTypes: {
+        text: { control: 'text' },
         icon: { 
             control: 'select', 
             options: Object.keys(ICON_MAP),
@@ -51,57 +51,58 @@ const meta = {
             control: 'select', 
             options: [Size.SMALL, Size.MEDIUM, Size.LARGE] 
         },
+        disabled: { control: 'boolean' },
         tooltip: { control: 'object' },
         onClick: { action: 'clicked' },
     },
-    decorators: [
-        (Story: StoryFn): ReactElement => (
-            <div style={{ padding: '20px', display: 'flex', gap: '10px', alignItems: 'center' }}>
-                <Story />
-            </div>
-        ),
-    ],
-} satisfies Meta<typeof IconButton>;
+} satisfies Meta<typeof DropDownMenuButton>;
 
 type Story = StoryObj<typeof meta>;
 
 
 export const Default: Story = {
     args: {
-        icon: <Icon name="settings" svg={settings.path} />,
-        tooltip: <Tooltip text="Settings" />,
+        text: 'Main Project',
+        icon: <Icon name="folder" svg={folder.path} />,
+    },
+};
+
+export const WithTooltip: Story = {
+    args: {
+        text: 'Main Project',
+        icon: <Icon name="folder" svg={folder.path} />,
+        tooltip: <Tooltip text="Change search context" anchor={null} />,
     },
 };
 
 export const Small: Story = {
     args: {
-        icon: <Icon name="settings" svg={settings.path} />,
+        text: 'Main Project',
+        icon: <Icon name="folder" svg={folder.path} />,
         size: Size.SMALL,
-        tooltip: <Tooltip text="Settings" />,
     },
 };
 
 export const Large: Story = {
     args: {
-        icon: <Icon name="settings" svg={settings.path} />,
+        text: 'Main Project',
+        icon: <Icon name="folder" svg={folder.path} />,
         size: Size.LARGE,
-        tooltip: <Tooltip text="Settings" />,
     },
 };
 
-export const Active: Story = {
+export const LongText: Story = {
     args: {
-        icon: <Icon name="settings" svg={settings.path} />,
-        active: true,
-        tooltip: <Tooltip text="Settings" />,
+        text: 'A Very Long Project Name that Might Overflow the Button Container',
+        icon: <Icon name="folder" svg={folder.path} />,
     },
 };
 
 export const Disabled: Story = {
     args: {
-        icon: 'CLOSE' as any,
+        text: 'Select Option',
+        icon: <Icon name="menu" svg={menu.path} />,
         disabled: true,
-        tooltip: <Tooltip text="Close" />,
     },
 };
 
