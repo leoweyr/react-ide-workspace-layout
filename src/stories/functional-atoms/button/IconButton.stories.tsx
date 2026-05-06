@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
 import type { Meta, StoryObj, StoryFn } from '@storybook/react';
 
-import { IconButton, Tooltip } from '../../components/functional-atoms';
+import { IconButton, Tooltip } from '../../../components/functional-atoms';
 import {
     Icon,
     Size,

@@ -16,8 +16,8 @@ import {
     search, 
     settings, 
     terminal 
-} from '../../components/style-atoms';
-import { Button, ButtonVariant, Tooltip } from '../../components/functional-atoms';
+} from '../../../components/style-atoms';
+import { Button, ButtonVariant, Tooltip } from '../../../components/functional-atoms';
 
 
 const ICON_MAP = {
