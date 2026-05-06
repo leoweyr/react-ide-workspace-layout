@@ -38,7 +38,7 @@ const ICON_MAP = {
 };
 
 const meta = {
-    title: 'Functional Atoms/IconButton',
+    title: 'Functional Atoms/Button/IconButton',
     component: IconButton,
     tags: ['autodocs'],
     argTypes: {

@@ -5,7 +5,7 @@ import { TextButton, Tooltip } from '../../../components/functional-atoms';
 
 
 const meta = {
-    title: 'Functional Atoms/TextButton',
+    title: 'Functional Atoms/Button/TextButton',
     component: TextButton,
     tags: ['autodocs'],
     argTypes: {

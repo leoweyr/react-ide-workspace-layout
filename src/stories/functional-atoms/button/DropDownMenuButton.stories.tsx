@@ -37,7 +37,7 @@ const ICON_MAP = {
 };
 
 const meta = {
-    title: 'Functional Atoms/DropDownMenuButton',
+    title: 'Functional Atoms/Button/DropDownMenuButton',
     component: DropDownMenuButton,
     tags: ['autodocs'],
     argTypes: {
