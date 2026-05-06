@@ -1,12 +1,12 @@
 import { ReactElement } from 'react';
 import type { Meta, StoryObj, StoryFn } from '@storybook/react';
 
-import { Tooltip, TooltipPosition, settings, build, ai, terminal } from '../../components/style-atoms';
-import { IconButton } from '../../components/functional-atoms';
+import { Tooltip, TooltipPosition, Button, ButtonVariant } from '../../components/functional-atoms';
+import { Icon, settings, Size } from '../../components/style-atoms';
 
 
 const meta = {
-    title: 'Style Atoms/Tooltip',
+    title: 'Functional Atoms/Tooltip',
     component: Tooltip,
     tags: ['autodocs'],
     argTypes: {
@@ -32,39 +32,39 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
     args: {
         text: 'Settings',
-        anchor: <IconButton svg={settings.path} />,
+        anchor: <Button icon={<Icon name="settings" svg={settings.path} />} variant={ButtonVariant.ICON} size={Size.MEDIUM} />,
     },
 };
 
 export const Top: Story = {
     args: {
-        text: 'Build Project',
+        text: 'Settings',
         position: TooltipPosition.TOP,
-        anchor: <IconButton svg={settings.path} />,
+        anchor: <Button icon={<Icon name="settings" svg={settings.path} />} variant={ButtonVariant.ICON} size={Size.MEDIUM} />,
     },
 };
 
 export const Left: Story = {
     args: {
-        text: 'AI Assistant',
+        text: 'Settings',
         position: TooltipPosition.LEFT,
-        anchor: <IconButton svg={settings.path} />,
+        anchor: <Button icon={<Icon name="settings" svg={settings.path} />} variant={ButtonVariant.ICON} size={Size.MEDIUM} />,
     },
 };
 
 export const Right: Story = {
     args: {
-        text: 'Terminal',
+        text: 'Settings',
         position: TooltipPosition.RIGHT,
-        anchor: <IconButton svg={settings.path} />,
+        anchor: <Button icon={<Icon name="settings" svg={settings.path} />} variant={ButtonVariant.ICON} size={Size.MEDIUM} />,
     },
 };
 
 export const AlwaysVisible: Story = {
     args: {
-        text: 'Always visible tooltip',
+        text: 'Settings',
         isVisible: true,
-        anchor: <IconButton svg={settings.path} />,
+        anchor: <Button icon={<Icon name="settings" svg={settings.path} />} variant={ButtonVariant.ICON} size={Size.MEDIUM} />,
     },
 };
 

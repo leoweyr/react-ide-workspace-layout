@@ -1,6 +1,6 @@
 import { Component, ReactNode, CSSProperties } from 'react';
 
-import { Theme } from '../../features/theme/Theme';
+import { Theme } from '../../../features/theme/Theme';
 import { TooltipPosition } from './enums/TooltipPosition';
 
 
@@ -73,7 +73,7 @@ class Tooltip extends Component<TooltipProps, TooltipState> {
         const theme: Theme = Theme.getInstance();
         const { position, style } = this.props;
 
-        let positionStyle: CSSProperties = {};
+        let positionStyle: CSSProperties;
 
         switch (position) {
             case TooltipPosition.TOP:
@@ -82,7 +82,6 @@ class Tooltip extends Component<TooltipProps, TooltipState> {
                     left: '50%',
                     transform: 'translateX(-50%) translateY(-8px)',
                 };
-                
                 break;
             case TooltipPosition.LEFT:
                 positionStyle = {
@@ -90,7 +89,6 @@ class Tooltip extends Component<TooltipProps, TooltipState> {
                     right: '100%',
                     transform: 'translateY(-50%) translateX(-8px)',
                 };
-
                 break;
             case TooltipPosition.RIGHT:
                 positionStyle = {
@@ -98,7 +96,6 @@ class Tooltip extends Component<TooltipProps, TooltipState> {
                     left: '100%',
                     transform: 'translateY(-50%) translateX(8px)',
                 };
-
                 break;
             case TooltipPosition.BOTTOM:
             default:
@@ -107,7 +104,6 @@ class Tooltip extends Component<TooltipProps, TooltipState> {
                     left: '50%',
                     transform: 'translateX(-50%) translateY(8px)',
                 };
-
                 break;
         }
 

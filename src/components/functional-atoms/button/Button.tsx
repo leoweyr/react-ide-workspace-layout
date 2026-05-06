@@ -1,6 +1,7 @@
 import { MouseEvent, CSSProperties, Component, ReactNode, cloneElement, isValidElement, ReactElement } from 'react';
 
-import { Icon, Size, Tooltip } from '../../style-atoms';
+import { Icon, Size } from '../../style-atoms';
+import { Tooltip } from '..';
 import { ButtonVariant } from './enums/ButtonVariant';
 import { Theme } from '../../../features/theme/Theme';
 
