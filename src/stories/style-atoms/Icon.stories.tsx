@@ -3,22 +3,17 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { 
     Icon, 
     Size, 
-    ai, 
-    build, 
     close, 
     collapse, 
     database, 
-    debug, 
     expand, 
     file, 
     folder, 
-    git, 
     menu, 
     notifications, 
     problems, 
     run, 
     search, 
-    services, 
     settings, 
     terminal 
 } from '../../components/style-atoms';
@@ -42,22 +37,6 @@ const meta = {
 
 type Story = StoryObj<typeof meta>;
 
-
-export const Ai: Story = {
-    args: {
-        name: 'ai',
-        svg: ai.path,
-        size: Size.MEDIUM,
-    },
-};
-
-export const Build: Story = {
-    args: {
-        name: 'build',
-        svg: build.path,
-        size: Size.MEDIUM,
-    },
-};
 
 export const Close: Story = {
     args: {
@@ -83,14 +62,6 @@ export const Database: Story = {
     },
 };
 
-export const Debug: Story = {
-    args: {
-        name: 'debug',
-        svg: debug.path,
-        size: Size.MEDIUM,
-    },
-};
-
 export const Expand: Story = {
     args: {
         name: 'expand',
@@ -111,14 +82,6 @@ export const Folder: Story = {
     args: {
         name: 'folder',
         svg: folder.path,
-        size: Size.MEDIUM,
-    },
-};
-
-export const Git: Story = {
-    args: {
-        name: 'git',
-        svg: git.path,
         size: Size.MEDIUM,
     },
 };
@@ -159,14 +122,6 @@ export const Search: Story = {
     args: {
         name: 'search',
         svg: search.path,
-        size: Size.MEDIUM,
-    },
-};
-
-export const Services: Story = {
-    args: {
-        name: 'services',
-        svg: services.path,
         size: Size.MEDIUM,
     },
 };
