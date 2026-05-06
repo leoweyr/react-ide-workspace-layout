@@ -69,7 +69,7 @@
         },
         "sizing": {
             "common": {
-                "borderRadius": "8px",
+                "borderRadius": "4px",
                 "borderWidth": "1px"
             },
             "bars": {
