@@ -9,10 +9,10 @@ import Button from './Button';
 interface DropDownMenuButtonProps {
     text: string;
     icon?: ReactElement<any, typeof Icon>;
-    onClick?: (event: MouseEvent) => void;
-    tooltip?: ReactElement<any, typeof Tooltip>;
-    disabled?: boolean;
     size?: Size;
+    tooltip?: ReactElement<any, typeof Tooltip>;
+    onClick?: (event: MouseEvent) => void;
+    disabled?: boolean;
     className?: string;
     style?: CSSProperties;
 }

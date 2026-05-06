@@ -11,6 +11,12 @@ interface ButtonProps {
     icon?: ReactElement<any, typeof Icon>;
     variant?: ButtonVariant;
     size?: Size;
+
+    /**
+     * An optional tooltip element to display on hover.
+     */
+    tooltip?: ReactElement<any, typeof Tooltip>;
+
     onClick?: (event: MouseEvent) => void;
 
     /**
@@ -24,11 +30,6 @@ interface ButtonProps {
      * When true, the button maintains a persistent highlighted visual state.
      */
     active?: boolean;
-
-    /**
-     * An optional tooltip element to display on hover.
-     */
-    tooltip?: ReactElement<any, typeof Tooltip>;
 
     className?: string;
     style?: CSSProperties;

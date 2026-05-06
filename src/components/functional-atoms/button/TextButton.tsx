@@ -1,45 +1,42 @@
-import { Component, ReactNode, MouseEvent, CSSProperties, ReactElement } from 'react';
+import { Component, ReactNode, CSSProperties, MouseEvent, ReactElement } from 'react';
 
-import { Icon, Size } from '../../style-atoms';
+import { Size } from '../../style-atoms';
 import { Tooltip } from '../tooltip';
 import { ButtonVariant } from './enums/ButtonVariant';
 import Button from './Button';
 
 
-interface IconButtonProps {
-    icon: ReactElement<any, typeof Icon>;
+interface TextButtonProps {
+    text: string;
     size?: Size;
     tooltip?: ReactElement<any, typeof Tooltip>;
     onClick?: (event: MouseEvent) => void;
     disabled?: boolean;
-    active?: boolean;
     className?: string;
     style?: CSSProperties;
 }
 
 
-class IconButton extends Component<IconButtonProps> {
+class TextButton extends Component<TextButtonProps> {
     public render(): ReactNode {
         const { 
-            icon, 
-            size = Size.MEDIUM, 
+            text,
             onClick, 
-            tooltip, 
+            tooltip,
             disabled, 
-            active, 
+            size,
             className, 
             style 
         } = this.props;
 
         return (
             <Button
-                icon={icon}
-                variant={ButtonVariant.ICON}
-                size={size}
+                text={text}
                 onClick={onClick}
                 tooltip={tooltip}
                 disabled={disabled}
-                active={active}
+                variant={ButtonVariant.GHOST}
+                size={size}
                 className={className}
                 style={style}
             />
@@ -48,4 +45,4 @@ class IconButton extends Component<IconButtonProps> {
 }
 
 
-export default IconButton;
+export default TextButton;
