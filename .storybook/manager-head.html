@@ -1,0 +1,18 @@
+<style>
+  /* Limit the size of the brand image in the sidebar. */
+  .sidebar-header img {
+    max-height: 24px !important;
+    width: auto !important;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+
+  /* If Storybook hides the title when an image is present, try to show it using a pseudo-element. */
+  .sidebar-header a::after {
+    content: 'React IDE Workspace Layout';
+    font-weight: bold;
+    font-size: 14px;
+    vertical-align: middle;
+    color: #333;
+  }
+</style>
