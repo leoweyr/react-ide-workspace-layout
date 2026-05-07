@@ -1,4 +1,5 @@
 export * from './enums/Size';
+export * from './enums/Orientation';
 export * from './enums/SplitterOrientation';
 
 export * from './icon';
