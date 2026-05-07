@@ -1,21 +1,10 @@
+import { ReactElement } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { 
     Icon, 
     Size, 
-    close, 
-    collapse, 
-    database, 
-    expand, 
-    file, 
-    folder, 
-    menu, 
-    notifications, 
-    problems, 
-    run, 
-    search, 
-    settings, 
-    terminal 
+    JETBRAINS_ICONS
 } from '../../components/style-atoms';
 
 
@@ -38,100 +27,49 @@ const meta = {
 type Story = StoryObj<typeof meta>;
 
 
-export const Close: Story = {
+/**
+ * A gallery story that displays all available JetBrains icons in a grid.
+ */
+export const JetbrainsIconPresets: Story = {
+    render: (args: any): ReactElement => (
+        <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))',
+            gap: '20px',
+            padding: '20px'
+        }}>
+            {Object.entries(JETBRAINS_ICONS).map(([key, icon]: [string, any]) => (
+                <div key={key} style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: '8px',
+                    padding: '12px',
+                    border: '1px solid #3c3f41',
+                    borderRadius: '4px',
+                    backgroundColor: '#2b2b2b'
+                }}>
+                    <Icon 
+                        {...args}
+                        name={icon.props.name} 
+                        svg={icon.props.svg} 
+                    />
+                    <span style={{ 
+                        fontSize: '11px', 
+                        color: '#afb1b3',
+                        textAlign: 'center',
+                        wordBreak: 'break-all'
+                    }}>
+                        {key}
+                    </span>
+                </div>
+            ))}
+        </div>
+    ),
     args: {
-        name: 'close',
-        svg: close.path,
         size: Size.MEDIUM,
-    },
-};
-
-export const Collapse: Story = {
-    args: {
-        name: 'collapse',
-        svg: collapse.path,
-        size: Size.MEDIUM,
-    },
-};
-
-export const Database: Story = {
-    args: {
-        name: 'database',
-        svg: database.path,
-        size: Size.MEDIUM,
-    },
-};
-
-export const Expand: Story = {
-    args: {
-        name: 'expand',
-        svg: expand.path,
-        size: Size.MEDIUM,
-    },
-};
-
-export const File: Story = {
-    args: {
-        name: 'file',
-        svg: file.path,
-        size: Size.MEDIUM,
-    },
-};
-
-export const Folder: Story = {
-    args: {
-        name: 'folder',
-        svg: folder.path,
-        size: Size.MEDIUM,
-    },
-};
-
-export const Menu: Story = {
-    args: {
-        name: 'menu',
-        svg: menu.path,
-        size: Size.MEDIUM,
-    },
-};
-
-export const Notifications: Story = {
-    args: {
-        name: 'notifications',
-        svg: notifications.path,
-        size: Size.MEDIUM,
-    },
-};
-
-export const Problems: Story = {
-    args: {
-        name: 'problems',
-        svg: problems.path,
-        size: Size.MEDIUM,
-    },
-};
-
-export const Run: Story = {
-    args: {
-        name: 'run',
-        svg: run.path,
-        size: Size.MEDIUM,
-    },
-};
-
-export const Search: Story = {
-    args: {
-        name: 'search',
-        svg: search.path,
-        size: Size.MEDIUM,
-    },
-};
-
-export const Settings: Story = {
-    args: {
-        name: 'settings',
-        svg: settings.path,
-        size: Size.MEDIUM,
-    },
+        svg: '',
+    }
 };
 
 export const ExternalLink: Story = {

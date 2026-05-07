@@ -2,40 +2,9 @@ import { ReactElement } from 'react';
 import type { Meta, StoryObj, StoryFn } from '@storybook/react';
 
 import { IconButton, Tooltip } from '../../../components/functional-atoms';
-import {
-    Icon,
-    Size,
-    close,
-    collapse,
-    database,
-    expand,
-    file,
-    folder,
-    menu,
-    notifications,
-    problems,
-    run,
-    search,
-    settings,
-    terminal
-} from '../../../components/style-atoms';
+import { Size } from '../../../components/style-atoms';
+import { JETBRAINS_ICONS } from '../../../components/style-atoms';
 
-
-const ICON_MAP = {
-    CLOSE: <Icon name="close" svg={close.path} />,
-    COLLAPSE: <Icon name="collapse" svg={collapse.path} />,
-    DATABASE: <Icon name="database" svg={database.path} />,
-    EXPAND: <Icon name="expand" svg={expand.path} />,
-    FILE: <Icon name="file" svg={file.path} />,
-    FOLDER: <Icon name="folder" svg={folder.path} />,
-    MENU: <Icon name="menu" svg={menu.path} />,
-    NOTIFICATIONS: <Icon name="notifications" svg={notifications.path} />,
-    PROBLEMS: <Icon name="problems" svg={problems.path} />,
-    RUN: <Icon name="run" svg={run.path} />,
-    SEARCH: <Icon name="search" svg={search.path} />,
-    SETTINGS: <Icon name="settings" svg={settings.path} />,
-    TERMINAL: <Icon name="terminal" svg={terminal.path} />,
-};
 
 const meta = {
     title: 'Functional Atoms/Button/IconButton',
@@ -44,8 +13,8 @@ const meta = {
     argTypes: {
         icon: { 
             control: 'select', 
-            options: Object.keys(ICON_MAP),
-            mapping: ICON_MAP,
+            options: Object.keys(JETBRAINS_ICONS),
+            mapping: JETBRAINS_ICONS,
         },
         size: { 
             control: 'select', 
@@ -68,14 +37,14 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
     args: {
-        icon: <Icon name="settings" svg={settings.path} />,
+        icon: JETBRAINS_ICONS.Settings,
         tooltip: <Tooltip text="Settings" />,
     },
 };
 
 export const Small: Story = {
     args: {
-        icon: <Icon name="settings" svg={settings.path} />,
+        icon: JETBRAINS_ICONS.Settings,
         size: Size.SMALL,
         tooltip: <Tooltip text="Settings" />,
     },
@@ -83,7 +52,7 @@ export const Small: Story = {
 
 export const Large: Story = {
     args: {
-        icon: <Icon name="settings" svg={settings.path} />,
+        icon: JETBRAINS_ICONS.Settings,
         size: Size.LARGE,
         tooltip: <Tooltip text="Settings" />,
     },
@@ -91,7 +60,7 @@ export const Large: Story = {
 
 export const Active: Story = {
     args: {
-        icon: <Icon name="settings" svg={settings.path} />,
+        icon: JETBRAINS_ICONS.Settings,
         active: true,
         tooltip: <Tooltip text="Settings" />,
     },
@@ -99,7 +68,7 @@ export const Active: Story = {
 
 export const Disabled: Story = {
     args: {
-        icon: 'CLOSE' as any,
+        icon: JETBRAINS_ICONS.Close,
         disabled: true,
         tooltip: <Tooltip text="Close" />,
     },

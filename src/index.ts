@@ -21,4 +21,3 @@ export { default as SplitterPane } from './components/style-atoms/SplitterPane';
 export { default as TabbedPaneContainer } from './components/style-atoms/TabbedPaneContainer';
 export { default as TabbedPaneContent } from './components/style-atoms/TabbedPaneContent';
 export { default as TabbedPaneHeader } from './components/style-atoms/TabbedPaneHeader';
-export { default as TooltipContainer } from './components/style-atoms/TooltipContainer';

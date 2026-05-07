@@ -1,6 +1,6 @@
-import { Component, ReactNode, CSSProperties, MouseEvent, ReactElement } from 'react';
+import { Component, ReactNode, CSSProperties, MouseEvent, ReactElement, cloneElement } from 'react';
 
-import { Icon, Size, expand } from '../../style-atoms';
+import { Icon, Size, JETBRAINS_ICONS } from '../../style-atoms';
 import { Tooltip } from '../tooltip';
 import { ButtonVariant } from './enums/ButtonVariant';
 import Button from './Button';
@@ -50,17 +50,15 @@ class DropDownMenuButton extends Component<DropDownMenuButtonProps> {
                         paddingRight: `${arrowPadding}px` 
                     }}
                 />
-                <Icon
-                    name="expand" 
-                    svg={expand.path} 
-                    size={size === Size.SMALL ? Size.SMALL : Size.MEDIUM} 
-                    style={{ 
+                {cloneElement(JETBRAINS_ICONS.ChevronDown as ReactElement, {
+                    size: size === Size.SMALL ? Size.SMALL : Size.MEDIUM,
+                    style: { 
                         position: 'absolute', 
                         right: `${arrowRight}px`, 
                         pointerEvents: 'none',
                         opacity: disabled ? 0.4 : 0.7 
-                    }} 
-                />
+                    }
+                })}
             </div>
         );
     }

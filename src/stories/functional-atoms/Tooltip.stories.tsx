@@ -2,7 +2,7 @@ import { ReactElement } from 'react';
 import type { Meta, StoryObj, StoryFn } from '@storybook/react';
 
 import { Tooltip, TooltipPosition, Button, ButtonVariant } from '../../components/functional-atoms';
-import { Icon, settings, Size } from '../../components/style-atoms';
+import { Icon, JETBRAINS_ICONS, Size } from '../../components/style-atoms';
 
 
 const meta = {
@@ -32,7 +32,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
     args: {
         text: 'Settings',
-        anchor: <Button icon={<Icon name="settings" svg={settings.path} />} variant={ButtonVariant.ICON} size={Size.MEDIUM} />,
+        anchor: <Button icon={JETBRAINS_ICONS.Settings} variant={ButtonVariant.ICON} size={Size.MEDIUM} />,
     },
 };
 
@@ -40,7 +40,7 @@ export const Top: Story = {
     args: {
         text: 'Settings',
         position: TooltipPosition.TOP,
-        anchor: <Button icon={<Icon name="settings" svg={settings.path} />} variant={ButtonVariant.ICON} size={Size.MEDIUM} />,
+        anchor: <Button icon={JETBRAINS_ICONS.Settings} variant={ButtonVariant.ICON} size={Size.MEDIUM} />,
     },
 };
 
@@ -48,7 +48,7 @@ export const Left: Story = {
     args: {
         text: 'Settings',
         position: TooltipPosition.LEFT,
-        anchor: <Button icon={<Icon name="settings" svg={settings.path} />} variant={ButtonVariant.ICON} size={Size.MEDIUM} />,
+        anchor: <Button icon={JETBRAINS_ICONS.Settings} variant={ButtonVariant.ICON} size={Size.MEDIUM} />,
     },
 };
 
@@ -56,7 +56,7 @@ export const Right: Story = {
     args: {
         text: 'Settings',
         position: TooltipPosition.RIGHT,
-        anchor: <Button icon={<Icon name="settings" svg={settings.path} />} variant={ButtonVariant.ICON} size={Size.MEDIUM} />,
+        anchor: <Button icon={JETBRAINS_ICONS.Settings} variant={ButtonVariant.ICON} size={Size.MEDIUM} />,
     },
 };
 
@@ -64,7 +64,7 @@ export const AlwaysVisible: Story = {
     args: {
         text: 'Settings',
         isVisible: true,
-        anchor: <Button icon={<Icon name="settings" svg={settings.path} />} variant={ButtonVariant.ICON} size={Size.MEDIUM} />,
+        anchor: <Button icon={JETBRAINS_ICONS.Settings} variant={ButtonVariant.ICON} size={Size.MEDIUM} />,
     },
 };
 

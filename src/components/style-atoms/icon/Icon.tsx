@@ -98,6 +98,7 @@ class Icon extends Component<IconProps> {
 
         return {
             ...this.getBaseStyles(),
+            color: color ?? 'currentColor',
             fill: color ?? 'currentColor',
         };
     }

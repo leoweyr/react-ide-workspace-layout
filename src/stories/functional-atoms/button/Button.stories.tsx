@@ -1,42 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { 
-    Icon, 
-    Size, 
-    close, 
-    collapse, 
-    database, 
-    expand, 
-    file, 
-    folder, 
-    menu, 
-    notifications, 
-    problems, 
-    run, 
-    search, 
-    settings, 
-    terminal 
-} from '../../../components/style-atoms';
+import { Size } from '../../../components/style-atoms';
 import { Button, ButtonVariant, Tooltip } from '../../../components/functional-atoms';
+import { JETBRAINS_ICONS } from '../../../components/style-atoms';
 
 
-const ICON_MAP = {
+const ICON_OPTIONS = {
     NONE: undefined,
-    CLOSE: <Icon name="close" svg={close.path} />,
-    COLLAPSE: <Icon name="collapse" svg={collapse.path} />,
-    DATABASE: <Icon name="database" svg={database.path} />,
-    EXPAND: <Icon name="expand" svg={expand.path} />,
-    FILE: <Icon name="file" svg={file.path} />,
-    FOLDER: <Icon name="folder" svg={folder.path} />,
-    MENU: <Icon name="menu" svg={menu.path} />,
-    NOTIFICATIONS: <Icon name="notifications" svg={notifications.path} />,
-    PROBLEMS: <Icon name="problems" svg={problems.path} />,
-    RUN: <Icon name="run" svg={run.path} />,
-    SEARCH: <Icon name="search" svg={search.path} />,
-    SETTINGS: <Icon name="settings" svg={settings.path} />,
-    TERMINAL: <Icon name="terminal" svg={terminal.path} />,
+    ...JETBRAINS_ICONS,
 };
-
 
 const meta = {
     title: 'Functional Atoms/Button',
@@ -46,8 +18,8 @@ const meta = {
         text: { control: 'text' },
         icon: { 
             control: 'select', 
-            options: Object.keys(ICON_MAP),
-            mapping: ICON_MAP,
+            options: Object.keys(ICON_OPTIONS),
+            mapping: ICON_OPTIONS,
         },
         variant: { 
             control: 'select', 
@@ -91,14 +63,14 @@ export const Ghost: Story = {
 export const WithIcon: Story = {
     args: {
         text: 'Run Project',
-        icon: 'RUN' as any,
+        icon: JETBRAINS_ICONS.Run,
         variant: ButtonVariant.PRIMARY,
     },
 };
 
 export const IconOnly: Story = {
     args: {
-        icon: <Icon name="settings" svg={settings.path} />,
+        icon: JETBRAINS_ICONS.Settings,
         variant: ButtonVariant.ICON,
         tooltip: <Tooltip text="Settings" />,
     },
@@ -107,7 +79,7 @@ export const IconOnly: Story = {
 export const Active: Story = {
     args: {
         text: 'Search Results',
-        icon: <Icon name="search" svg={search.path} />,
+        icon: JETBRAINS_ICONS.Search,
         variant: ButtonVariant.GHOST,
         active: true,
     },

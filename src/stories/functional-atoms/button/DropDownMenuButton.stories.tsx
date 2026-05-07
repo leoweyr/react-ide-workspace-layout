@@ -1,40 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import {
-    Icon,
-    Size,
-    close,
-    collapse,
-    database,
-    expand,
-    file,
-    folder,
-    menu,
-    notifications,
-    problems,
-    run,
-    search,
-    settings,
-    terminal
-} from '../../../components/style-atoms';
+import { Size } from '../../../components/style-atoms';
 import { DropDownMenuButton, Tooltip } from '../../../components/functional-atoms';
+import { JETBRAINS_ICONS } from '../../../components/style-atoms';
 
-
-const ICON_MAP = {
-    CLOSE: <Icon name="close" svg={close.path} />,
-    COLLAPSE: <Icon name="collapse" svg={collapse.path} />,
-    DATABASE: <Icon name="database" svg={database.path} />,
-    EXPAND: <Icon name="expand" svg={expand.path} />,
-    FILE: <Icon name="file" svg={file.path} />,
-    FOLDER: <Icon name="folder" svg={folder.path} />,
-    MENU: <Icon name="menu" svg={menu.path} />,
-    NOTIFICATIONS: <Icon name="notifications" svg={notifications.path} />,
-    PROBLEMS: <Icon name="problems" svg={problems.path} />,
-    RUN: <Icon name="run" svg={run.path} />,
-    SEARCH: <Icon name="search" svg={search.path} />,
-    SETTINGS: <Icon name="settings" svg={settings.path} />,
-    TERMINAL: <Icon name="terminal" svg={terminal.path} />,
-};
 
 const meta = {
     title: 'Functional Atoms/Button/DropDownMenuButton',
@@ -44,8 +13,8 @@ const meta = {
         text: { control: 'text' },
         icon: { 
             control: 'select', 
-            options: Object.keys(ICON_MAP),
-            mapping: ICON_MAP,
+            options: Object.keys(JETBRAINS_ICONS),
+            mapping: JETBRAINS_ICONS,
         },
         size: { 
             control: 'select', 
@@ -63,14 +32,14 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
     args: {
         text: 'Main Project',
-        icon: <Icon name="folder" svg={folder.path} />,
+        icon: JETBRAINS_ICONS.Project,
     },
 };
 
 export const WithTooltip: Story = {
     args: {
         text: 'Main Project',
-        icon: <Icon name="folder" svg={folder.path} />,
+        icon: JETBRAINS_ICONS.Project,
         tooltip: <Tooltip text="Change search context" anchor={null} />,
     },
 };
@@ -78,7 +47,7 @@ export const WithTooltip: Story = {
 export const Small: Story = {
     args: {
         text: 'Main Project',
-        icon: <Icon name="folder" svg={folder.path} />,
+        icon: JETBRAINS_ICONS.Project,
         size: Size.SMALL,
     },
 };
@@ -86,7 +55,7 @@ export const Small: Story = {
 export const Large: Story = {
     args: {
         text: 'Main Project',
-        icon: <Icon name="folder" svg={folder.path} />,
+        icon: JETBRAINS_ICONS.Project,
         size: Size.LARGE,
     },
 };
@@ -94,14 +63,14 @@ export const Large: Story = {
 export const LongText: Story = {
     args: {
         text: 'A Very Long Project Name that Might Overflow the Button Container',
-        icon: <Icon name="folder" svg={folder.path} />,
+        icon: JETBRAINS_ICONS.Project,
     },
 };
 
 export const Disabled: Story = {
     args: {
         text: 'Select Option',
-        icon: <Icon name="menu" svg={menu.path} />,
+        icon: JETBRAINS_ICONS.Menu,
         disabled: true,
     },
 };
