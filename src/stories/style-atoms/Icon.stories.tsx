@@ -134,11 +134,11 @@ export const Settings: Story = {
     },
 };
 
-export const Terminal: Story = {
+export const ExternalLink: Story = {
     args: {
-        name: 'terminal',
-        svg: terminal.path,
-        size: Size.MEDIUM,
+        name: 'external',
+        svg: 'https://raw.githubusercontent.com/leoweyr/react-ide-workspace-layout/refs/heads/develop/assets/icon.svg',
+        size: Size.LARGE
     },
 };
 
