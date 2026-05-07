@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 import Toolbar from '../../components/style-atoms/Toolbar';
-import Button from '../../components/style-atoms/Button';
+import { IconButton } from '../../components/functional-atoms';
+import { Icon, menu, folder, settings, Orientation } from '../../components/style-atoms';
 
 
 const meta = {
@@ -9,8 +10,9 @@ const meta = {
     component: Toolbar,
     tags: ['autodocs'],
     argTypes: {
-        orientation: { control: 'select', options: ['horizontal', 'vertical'] },
+        orientation: { control: 'select', options: ['HORIZONTAL', 'VERTICAL'] },
         gap: { control: 'number' },
+        thickness: { control: 'number' },
     },
 } satisfies Meta<typeof Toolbar>;
 
@@ -19,12 +21,12 @@ type Story = StoryObj<typeof meta>;
 
 export const Horizontal: Story = {
     args: {
-        orientation: 'horizontal',
+        orientation: Orientation.HORIZONTAL,
         children: (
             <>
-                <Button icon="menu" variant="icon" />
-                <Button icon="folder" variant="icon" />
-                <Button icon="settings" variant="icon" />
+                <IconButton icon={<Icon name="menu" svg={menu.path} />} />
+                <IconButton icon={<Icon name="folder" svg={folder.path} />} />
+                <IconButton icon={<Icon name="settings" svg={settings.path} />} />
             </>
         ),
     },
@@ -32,13 +34,13 @@ export const Horizontal: Story = {
 
 export const Vertical: Story = {
     args: {
-        orientation: 'vertical',
+        orientation: Orientation.VERTICAL,
         style: { height: '200px' },
         children: (
             <>
-                <Button icon="menu" variant="icon" />
-                <Button icon="folder" variant="icon" />
-                <Button icon="settings" variant="icon" />
+                <IconButton icon={<Icon name="menu" svg={menu.path} />} />
+                <IconButton icon={<Icon name="folder" svg={folder.path} />} />
+                <IconButton icon={<Icon name="settings" svg={settings.path} />} />
             </>
         ),
     },

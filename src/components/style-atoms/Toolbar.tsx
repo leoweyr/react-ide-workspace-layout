@@ -1,13 +1,22 @@
 import { ReactNode, CSSProperties, Component } from 'react';
 
 import { Theme } from '../../features/theme/Theme';
-import { ToolbarOrientation } from './enums/ToolbarOrientation';
+import { Orientation } from './enums/Orientation';
 
 
 interface ToolbarProps {
+    /** The content to be rendered within the toolbar. */
     children: ReactNode;
-    orientation?: ToolbarOrientation;
+
+    /** The layout orientation of the toolbar. */
+    orientation?: Orientation;
+
+    /** The spacing between children elements. */
     gap?: number;
+
+    /** The thickness (height when horizontal, width when vertical) of the toolbar. */
+    thickness?: number;
+
     className?: string;
     style?: CSSProperties;
 }
@@ -24,9 +33,19 @@ class Toolbar extends Component<ToolbarProps> {
 
     private getStyles(): CSSProperties {
         const theme = Theme.getInstance();
-        const { orientation = ToolbarOrientation.HORIZONTAL, gap = theme.layout.spacing.small, style } = this.props;
-    
-        const isHorizontal: boolean = orientation === ToolbarOrientation.HORIZONTAL;
+
+        const { 
+            orientation = Orientation.HORIZONTAL, 
+            gap = theme.layout.spacing.small, 
+            thickness,
+            style 
+        } = this.props;
+
+        const isHorizontal: boolean = orientation === Orientation.HORIZONTAL;
+
+        const finalThickness: string = thickness !== undefined 
+            ? `${thickness}px` 
+            : (isHorizontal ? `${theme.layout.sizing.bars.topHeight}px` : `${theme.layout.sizing.bars.sideWidth}px`);
 
         return {
             display: 'flex',
@@ -37,8 +56,8 @@ class Toolbar extends Component<ToolbarProps> {
             borderBottom: isHorizontal ? `${theme.layout.sizing.common.borderWidth} solid ${theme.colors.neutral.border}` : 'none',
             borderRight: !isHorizontal ? `${theme.layout.sizing.common.borderWidth} solid ${theme.colors.neutral.border}` : 'none',
             alignItems: 'center',
-            height: isHorizontal ? `${theme.layout.sizing.bars.topHeight}px` : '100%',
-            width: !isHorizontal ? `${theme.layout.sizing.bars.sideWidth}px` : '100%',
+            height: isHorizontal ? finalThickness : '100%',
+            width: !isHorizontal ? finalThickness : '100%',
             boxSizing: 'border-box',
             ...style,
         };
