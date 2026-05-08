@@ -2,7 +2,7 @@ interface ThemeTypography {
     font: {
         family: string;
         codeFamily: string;
-        size: string;
+        sizeMedium: string;
         sizeSmall: string;
         sizeLarge: string;
         weight?: string | number;
