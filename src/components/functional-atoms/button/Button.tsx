@@ -123,11 +123,9 @@ class Button extends Component<ButtonProps, ButtonState> {
                 fontSize = theme.typography.font.sizeLarge;
 
                 break;
-
-            // Size not manually checked yet.
             case Size.MEDIUM:
             default:
-                paddingX = 6;
+                paddingX = 3.75;  // Size not manually checked yet.
                 paddingY = 3.75;
                 fontSize = theme.typography.font.sizeMedium;
 

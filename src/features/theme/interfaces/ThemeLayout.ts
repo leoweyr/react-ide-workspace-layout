@@ -10,12 +10,7 @@ interface ThemeLayout {
         common: {
             borderRadius: string;
             borderWidth: string;
-        };
-        bars: {
-            topHeight: number;
-            bottomHeight: number;
-            sideWidth: number;
-        };
+        }
     };
 }
 

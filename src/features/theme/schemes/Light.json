@@ -71,11 +71,6 @@
             "common": {
                 "borderRadius": "4px",
                 "borderWidth": "1px"
-            },
-            "bars": {
-                "topHeight": 40,
-                "bottomHeight": 24,
-                "sideWidth": 36
             }
         }
     }

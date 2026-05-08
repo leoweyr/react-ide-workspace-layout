@@ -35,7 +35,7 @@ class Toolbar extends Component<ToolbarProps> {
     }
 
     private getStyles(): CSSProperties {
-        const theme = Theme.getInstance();
+        const theme: Theme = Theme.getInstance();
 
         const { 
             orientation = Orientation.HORIZONTAL, 
@@ -47,9 +47,7 @@ class Toolbar extends Component<ToolbarProps> {
 
         const isHorizontal: boolean = orientation === Orientation.HORIZONTAL;
 
-        const finalThickness: string = thickness !== undefined 
-            ? `${thickness}px` 
-            : (isHorizontal ? `${theme.layout.sizing.bars.topHeight}px` : `${theme.layout.sizing.bars.sideWidth}px`);
+        const finalThickness: string = thickness !== undefined ? `${thickness}px` : "39px";
 
         // Apply padding to the start/end of the bar based on orientation.
         const paddingX: string = isHorizontal ? `${padding}px` : `0px`;

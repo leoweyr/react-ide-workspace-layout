@@ -81,7 +81,7 @@ class Icon extends Component<IconProps> {
             // Size not manually checked yet.
             case Size.MEDIUM:
             default:
-                finalSize = 17.5;
+                finalSize = 19;
 
                 break;
         }
