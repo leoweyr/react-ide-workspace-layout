@@ -53,7 +53,8 @@
             "codeFamily": "\"JetBrains Mono\", \"Fira Code\", monospace",
             "sizeMedium": "10px",
             "sizeSmall": "8px",
-            "sizeLarge": "12px"
+            "sizeLarge": "12px",
+            "sizeExtraLarge": "13px"
         },
         "line": {
             "height": "1.5"

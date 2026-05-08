@@ -5,6 +5,7 @@ interface ThemeTypography {
         sizeMedium: string;
         sizeSmall: string;
         sizeLarge: string;
+        sizeExtraLarge: string;
         weight?: string | number;
     };
     line: {

@@ -111,10 +111,10 @@ class Tooltip extends Component<TooltipProps, TooltipState> {
             position: 'absolute',
             backgroundColor: theme.colors.tooltip.background,
             color: theme.colors.tooltip.text,
-            padding: `7px 11px`,  // Manually aligned with IDEA dimensions.
+            padding: `7.5px 13.25px`,  // Manually aligned with IDEA dimensions.
             borderRadius: theme.layout.sizing.common.borderRadius,
             border: `${theme.layout.sizing.common.borderWidth} solid ${theme.colors.tooltip.border}`,
-            fontSize: theme.typography.font.sizeSmall,
+            fontSize: theme.typography.font.sizeExtraLarge,
             fontFamily: theme.typography.font.family,
             whiteSpace: 'nowrap',
             pointerEvents: 'none',
