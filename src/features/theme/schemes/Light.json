@@ -51,9 +51,9 @@
         "font": {
             "family": "\"Segoe UI\", \"Inter\", \"Roboto\", sans-serif",
             "codeFamily": "\"JetBrains Mono\", \"Fira Code\", monospace",
-            "size": "8px",
-            "sizeSmall": "10px",
-            "sizeLarge": "14px"
+            "sizeMedium": "10px",
+            "sizeSmall": "8px",
+            "sizeLarge": "12px"
         },
         "line": {
             "height": "1.5"

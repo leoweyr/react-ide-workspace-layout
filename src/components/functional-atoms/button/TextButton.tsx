@@ -29,7 +29,26 @@ class TextButton extends Component<TextButtonProps> {
             style 
         } = this.props;
 
-        const paddingY: number = 5.5;
+        let paddingY: number;
+
+        switch (size) {
+            // Size not manually checked yet.
+            case Size.SMALL:
+                paddingY = 5.5;
+
+                break;
+            case Size.LARGE:
+                paddingY = 8.25;
+
+                break;
+
+            // Size not manually checked yet.
+            case Size.MEDIUM:
+            default:
+                paddingY = 5.5;
+
+                break;
+        }
 
         return (
             <Button

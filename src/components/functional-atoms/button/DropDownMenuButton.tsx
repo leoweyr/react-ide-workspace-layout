@@ -31,8 +31,29 @@ class DropDownMenuButton extends Component<DropDownMenuButtonProps> {
             style 
         } = this.props;
 
-        const arrowPadding: number = 15;
-        const arrowRight: number = 4;
+        let arrowPadding: number;
+        let arrowRight: number;
+
+        switch (size) {
+            // Size not manually checked yet.
+            case Size.SMALL:
+                arrowPadding = 16;
+                arrowRight = 4;
+
+                break;
+            case Size.LARGE:
+                arrowPadding = 24;
+                arrowRight = 6;
+
+                break;
+            // Size not manually checked yet.
+            case Size.MEDIUM:
+            default:
+                arrowPadding = 15;
+                arrowRight = 4;
+
+                break;
+        }
 
         return (
             <div style={this.getWrapperStyles()}>

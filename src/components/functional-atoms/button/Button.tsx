@@ -105,9 +105,34 @@ class Button extends Component<ButtonProps, ButtonState> {
         const transition: string = 'background-color 0.15s, border-color 0.15s, opacity 0.15s';
 
         // Calculate spacing based on theme and size.
-        const paddingX: number = 4;
-        const paddingY: number = 2.5;
-        const fontSize: string = theme.typography.font.size;
+        let paddingX: number;
+        let paddingY: number;
+        let fontSize: string;
+
+        switch (size) {
+            // Size not manually checked yet.
+            case Size.SMALL:
+                paddingX = 4;
+                paddingY = 2.5;
+                fontSize = theme.typography.font.sizeSmall;
+
+                break;
+            case Size.LARGE:
+                paddingX = 6;
+                paddingY = 3.75
+                fontSize = theme.typography.font.sizeLarge;
+
+                break;
+
+            // Size not manually checked yet.
+            case Size.MEDIUM:
+            default:
+                paddingX = 6;
+                paddingY = 3.75;
+                fontSize = theme.typography.font.sizeMedium;
+
+                break;
+        }
 
         // Apply variant-specific styling logic.
         switch (variant) {

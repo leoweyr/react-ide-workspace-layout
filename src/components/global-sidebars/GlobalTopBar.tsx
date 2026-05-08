@@ -92,7 +92,7 @@ class GlobalTopBar extends Component<GlobalTopBarProps, GlobalTopBarState> {
         return (
             <Toolbar 
                 orientation={Orientation.HORIZONTAL}
-                thickness={26}
+                thickness={39}
                 gap={theme.layout.spacing.small}
                 padding={theme.layout.spacing.medium}
                 className={className} 
