@@ -105,8 +105,8 @@ class Button extends Component<ButtonProps, ButtonState> {
         const transition: string = 'background-color 0.15s, border-color 0.15s, opacity 0.15s';
 
         // Calculate spacing based on theme and size.
-        const paddingX: number = size === Size.SMALL ? theme.layout.spacing.small : (size === Size.MEDIUM ? theme.layout.spacing.medium : theme.layout.spacing.large);
-        const paddingY: number = size === Size.SMALL ? 2 : (size === Size.MEDIUM ? 4 : 6);
+        const paddingX: number = 4;
+        const paddingY: number = 2.5;
         const fontSize: string = theme.typography.font.size;
 
         // Apply variant-specific styling logic.
@@ -160,8 +160,10 @@ class Button extends Component<ButtonProps, ButtonState> {
             border: border,
             borderRadius: borderRadius,
             padding: padding,
+            margin: 0,  // Explicitly clear the button's external margins.
             fontSize: fontSize,
             fontFamily: theme.typography.font.family,
+            lineHeight: 1,  // Force the line height to equal the font size.
             cursor: cursor,
             opacity: opacity,
             outline: 'none',

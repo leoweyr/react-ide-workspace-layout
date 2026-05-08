@@ -29,6 +29,8 @@ class TextButton extends Component<TextButtonProps> {
             style 
         } = this.props;
 
+        const paddingY: number = 5.5;
+
         return (
             <Button
                 text={text}
@@ -38,7 +40,11 @@ class TextButton extends Component<TextButtonProps> {
                 variant={ButtonVariant.GHOST}
                 size={size}
                 className={className}
-                style={style}
+                style={{ 
+                    ...style, 
+                    paddingTop: `${paddingY}px`,
+                    paddingBottom: `${paddingY}px`
+                }}
             />
         );
     }

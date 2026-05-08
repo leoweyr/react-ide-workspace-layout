@@ -69,16 +69,16 @@ class Icon extends Component<IconProps> {
 
         switch (size) {
             case Size.SMALL:
-                finalSize = 14;
+                finalSize = 10;
                 break;
             case Size.MEDIUM:
-                finalSize = 16;
+                finalSize = 12;
                 break;
             case Size.LARGE:
-                finalSize = 20;
+                finalSize = 14;
                 break;
             default:
-                finalSize = 16;
+                finalSize = 12;
         }
 
         return {
