@@ -6,6 +6,7 @@ import {
     Size, 
     JETBRAINS_ICONS
 } from '../../components/style-atoms';
+import logo from '../../../assets/icon.svg';
 
 
 const meta = {
@@ -74,8 +75,8 @@ export const JetbrainsIconPresets: Story = {
 
 export const ExternalLink: Story = {
     args: {
-        name: 'external',
-        svg: 'https://raw.githubusercontent.com/leoweyr/react-ide-workspace-layout/refs/heads/develop/assets/icon.svg',
+        name: 'Logo',
+        svg: logo,
         size: Size.LARGE
     },
 };
