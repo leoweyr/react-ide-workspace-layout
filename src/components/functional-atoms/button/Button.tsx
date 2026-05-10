@@ -114,20 +114,17 @@ class Button extends Component<ButtonProps, ButtonState> {
             case Size.SMALL:
                 paddingX = 4;
                 paddingY = 2.5;
-                fontSize = theme.typography.font.sizeSmall;
 
                 break;
             case Size.LARGE:
                 paddingX = 6;
                 paddingY = 3.75
-                fontSize = theme.typography.font.sizeLarge;
 
                 break;
             case Size.MEDIUM:
             default:
                 paddingX = 3.75;  // Size not manually checked yet.
                 paddingY = 3.75;
-                fontSize = theme.typography.font.sizeMedium;
 
                 break;
         }
@@ -184,7 +181,7 @@ class Button extends Component<ButtonProps, ButtonState> {
             borderRadius: borderRadius,
             padding: padding,
             margin: 0,  // Explicitly clear the button's external margins.
-            fontSize: fontSize,
+            fontSize: theme.typography.font.sizeLarge,
             fontFamily: theme.typography.font.family,
             lineHeight: 1,  // Force the line height to equal the font size.
             cursor: cursor,

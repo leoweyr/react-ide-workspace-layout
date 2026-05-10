@@ -1,5 +1,6 @@
 export * from './components/functional-atoms';
 export * as StyleAtoms from './components/style-atoms';
+export * from './components/global-sidebars';
 
 // Re-export non-conflicting style atoms for convenience
 export { default as Icon } from './components/style-atoms/icon/Icon';

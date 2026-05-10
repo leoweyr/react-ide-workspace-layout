@@ -68,9 +68,8 @@ class Icon extends Component<IconProps> {
         let finalSize: number;
 
         switch (size) {
-            // Size not manually checked yet.
             case Size.SMALL:
-                finalSize = 14;
+                finalSize = 12;
 
                 break;
             case Size.LARGE:
