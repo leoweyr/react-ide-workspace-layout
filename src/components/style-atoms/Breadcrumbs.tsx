@@ -1,18 +1,18 @@
-import { 
-    Component, 
-    ReactNode, 
-    CSSProperties, 
-    ReactElement, 
-    Fragment, 
-    cloneElement 
+import {
+    Component,
+    ReactNode,
+    CSSProperties,
+    ReactElement,
+    Fragment,
+    cloneElement
 } from 'react';
 
 import { Theme } from '../../features/theme/Theme';
-import { 
-    JETBRAINS_ICONS, 
-    Size 
+import {
+    JETBRAINS_ICONS,
+    Size
 } from '../style-atoms';
-import { IconWithTextButton, TextButton } from './button';
+import { IconWithTextButton, TextButton } from '../functional-atoms';
 
 
 interface BreadcrumbsProps {
@@ -68,7 +68,7 @@ class Breadcrumbs extends Component<BreadcrumbsProps> {
 
     private renderSeparator(theme: Theme): ReactNode {
         return (
-            <div style={this.getSeparatorStyles(theme)}>
+            <div style={this.getSeparatorStyles()}>
                 {cloneElement(JETBRAINS_ICONS.ChevronRight as ReactElement, {
                     size: Size.SMALL,
                     color: theme.colors.neutral.textSecondary,
@@ -86,7 +86,7 @@ class Breadcrumbs extends Component<BreadcrumbsProps> {
         };
     }
 
-    private getSeparatorStyles(theme: Theme): CSSProperties {
+    private getSeparatorStyles(): CSSProperties {
         return {
             display: 'flex',
             alignItems: 'center',
