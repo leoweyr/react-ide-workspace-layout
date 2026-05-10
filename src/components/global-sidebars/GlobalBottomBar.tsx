@@ -3,10 +3,10 @@ import { Component, ReactNode, CSSProperties, ReactElement, cloneElement, isVali
 import { 
     Toolbar, 
     Orientation, 
-    Size
+    Size,
+    Breadcrumbs
 } from '../style-atoms';
 import { 
-    Breadcrumbs, 
     IconButton, 
     TextButton, 
     IconWithTextButton,

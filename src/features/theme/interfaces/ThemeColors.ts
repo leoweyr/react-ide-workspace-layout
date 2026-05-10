@@ -45,6 +45,10 @@ interface ThemeColors {
         warning: string;
         error: string;
     };
+    attention: {
+        focus: string;
+        unfocus: string;
+    };
 }
 
 

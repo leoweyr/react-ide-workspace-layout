@@ -8,4 +8,3 @@ export { default as ScrollPane } from './ScrollPane';
 export { default as Splitter } from './Splitter';
 export { default as Tab } from './Tab';
 export { default as TabbedPane } from './TabbedPane';
-export { default as Breadcrumbs } from './Breadcrumbs';

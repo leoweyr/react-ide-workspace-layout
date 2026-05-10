@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { Breadcrumbs, IconWithTextButton, TextButton } from '../../components/functional-atoms';
-import {JETBRAINS_ICONS, Size} from '../../components/style-atoms';
+import { Breadcrumbs, Size, JETBRAINS_ICONS } from '../../components/style-atoms';
+import { IconWithTextButton, TextButton } from '../../components/functional-atoms';
 
 
 const meta = {
-    title: 'Functional Atoms/Breadcrumbs',
+    title: 'Style Atoms/Breadcrumbs',
     component: Breadcrumbs,
     tags: ['autodocs'],
 } satisfies Meta<typeof Breadcrumbs>;

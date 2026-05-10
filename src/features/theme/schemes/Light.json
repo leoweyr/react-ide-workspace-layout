@@ -45,6 +45,10 @@
             "success": "#629755",
             "warning": "#bf8803",
             "error": "#cc0000"
+        },
+        "attention": {
+            "focus": "#3574F0",
+            "unfocus": "#A8ADBD"
         }
     },
     "typography": {

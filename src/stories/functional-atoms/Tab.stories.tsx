@@ -1,18 +1,14 @@
+import { ReactElement } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 
-import Tab from '../../components/functional-atoms/Tab';
+import { Tab } from '../../components/functional-atoms';
+import { Icon, JETBRAINS_ICONS } from '../../components/style-atoms';
 
 
 const meta = {
     title: 'Functional Atoms/Tab',
     component: Tab,
-    tags: ['autodocs'],
-    argTypes: {
-        title: { control: 'text' },
-        isActive: { control: 'boolean' },
-        isModified: { control: 'boolean' },
-        icon: { control: 'select', options: ['file', 'settings'] },
-    },
+    tags: ['autodocs']
 } satisfies Meta<typeof Tab>;
 
 type Story = StoryObj<typeof meta>;
@@ -20,35 +16,42 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
     args: {
-        title: 'filename.ts',
-        icon: 'file',
-    },
+        title: 'Tab.tsx',
+        icon: JETBRAINS_ICONS.File as ReactElement<any, typeof Icon>
+    }
 };
 
 export const Active: Story = {
     args: {
-        title: 'active_file.ts',
-        icon: 'file',
+        title: 'Tab.tsx',
+        icon: JETBRAINS_ICONS.File as ReactElement<any, typeof Icon>,
+        isActive: true
+    }
+};
+
+export const ActiveWithoutFocus: Story = {
+    args: {
+        title: 'Tab.tsx',
+        icon: JETBRAINS_ICONS.File as ReactElement<any, typeof Icon>,
         isActive: true,
-    },
+        isFocused: false
+    }
 };
 
-export const Modified: Story = {
+export const Notification: Story = {
     args: {
-        title: 'modified_file.ts',
-        icon: 'file',
-        isModified: true,
-    },
+        title: 'Tab.tsx',
+        icon: JETBRAINS_ICONS.File as ReactElement<any, typeof Icon>,
+        hasNotification: true
+    }
 };
 
-export const HoverState: Story = {
+export const Closable: Story = {
     args: {
-        title: 'hover_me.ts',
-        icon: 'file',
-    },
-    parameters: {
-        pseudo: { hover: true },
-    },
+        title: 'Tab.tsx',
+        icon: JETBRAINS_ICONS.File as ReactElement<any, typeof Icon>,
+        onClose: (): void => {}
+    }
 };
 
 

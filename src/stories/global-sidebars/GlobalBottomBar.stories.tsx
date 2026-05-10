@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { GlobalBottomBar } from '../../components/global-sidebars';
+import { Breadcrumbs } from '../../components/style-atoms';
 import {
-    Breadcrumbs,
     IconWithTextButton,
     IconButton,
     TextButton, Tooltip

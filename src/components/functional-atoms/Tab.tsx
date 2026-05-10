@@ -1,16 +1,36 @@
-import { MouseEvent, CSSProperties, Component, ReactNode } from 'react';
+import { 
+    Component, 
+    ReactNode, 
+    CSSProperties, 
+    MouseEvent as ReactMouseEvent, 
+    cloneElement,
+    ReactElement,
+    isValidElement
+} from 'react';
 
-import { IconName } from '../style-atoms/enums/IconName';
-import StyledTab from '../style-atoms/Tab';
+import { Theme } from '../../features/theme/Theme';
+import { 
+    Icon, 
+    Size, 
+    JETBRAINS_ICONS 
+} from '../style-atoms';
 
 
 interface TabProps {
+    icon: ReactElement<any, typeof Icon>;
     title: string;
+
+    /** Whether the tab has a notification. */
+    hasNotification?: boolean;
+
+    /** Whether the tab is currently active. */
     isActive?: boolean;
-    isModified?: boolean;
-    icon?: IconName;
-    onClose?: (event: MouseEvent) => void;
-    onClick?: (event: MouseEvent) => void;
+
+    /** Whether the tab (or its relative container) currently has focus. Defaults to true. */
+    isFocused?: boolean;
+
+    onClick?: (event: ReactMouseEvent) => void;
+    onClose?: (event: ReactMouseEvent) => void;
     className?: string;
     style?: CSSProperties;
 }
@@ -23,21 +43,22 @@ interface TabState {
 
 
 class Tab extends Component<TabProps, TabState> {
+    private readonly _closeIconSize: number = 10;  // Manually aligned with IDEA dimensions.
+    private readonly _closeButtonSize: number = 16;  // Manually aligned with IDEA dimensions.
+
     private handleMouseEnter: () => void = (): void => {
         this.setState({ isHovered: true });
     };
 
     private handleMouseLeave: () => void = (): void => {
-        this.setState({ isHovered: false });
+        this.setState({ isHovered: false, isCloseHovered: false });
     };
 
-    private handleCloseMouseEnter: (event: MouseEvent) => void = (event: MouseEvent): void => {
-        event.stopPropagation();
+    private handleCloseMouseEnter: () => void = (): void => {
         this.setState({ isCloseHovered: true });
     };
 
-    private handleCloseMouseLeave: (event: MouseEvent) => void = (event: MouseEvent): void => {
-        event.stopPropagation();
+    private handleCloseMouseLeave: () => void = (): void => {
         this.setState({ isCloseHovered: false });
     };
 
@@ -51,27 +72,137 @@ class Tab extends Component<TabProps, TabState> {
     }
 
     public render(): ReactNode {
-        const { title, icon, isActive, isModified, onClose, onClick, className, style } = this.props;
+        const theme: Theme = Theme.getInstance();
+
+        const { 
+            icon,
+            title, 
+            isActive = false,
+            isFocused = true,
+            hasNotification, 
+            onClose, 
+            onClick, 
+            className 
+        } = this.props;
+
         const { isHovered, isCloseHovered } = this.state;
 
         return (
-            <StyledTab
-                title={title}
-                icon={icon}
-                isActive={isActive}
-                isModified={isModified}
-                isHovered={isHovered}
-                isCloseHovered={isCloseHovered}
-                onClose={onClose}
-                onClick={onClick}
+            <div 
+                className={className} 
+                style={this.getStyles(isActive, isHovered)}
                 onMouseEnter={this.handleMouseEnter}
                 onMouseLeave={this.handleMouseLeave}
-                onCloseMouseEnter={this.handleCloseMouseEnter}
-                onCloseMouseLeave={this.handleCloseMouseLeave}
-                className={className}
-                style={style}
-            />
+                onClick={onClick}
+            >
+                {isActive && <div style={this.getActiveIndicatorStyles(theme, isFocused)} />}
+
+                {icon && isValidElement(icon) && cloneElement(icon as ReactElement, {
+                    size: Size.SMALL,
+                    color: isActive ? theme.colors.selection.background : theme.colors.neutral.textSecondary,
+                    style: { marginRight: `6px`, ...icon.props.style }  // Manually aligned with IDEA dimensions.
+                })}
+        
+                <span style={this.getTextStyles(theme)}>
+                    {title}
+                </span>
+
+                {hasNotification && !isHovered ? (
+                    <div style={this.getNotificationIndicatorStyles(theme)} />
+                ) : (
+                    (onClose || isHovered) && (
+                        <div 
+                            onMouseEnter={this.handleCloseMouseEnter}
+                            onMouseLeave={this.handleCloseMouseLeave}
+                            onClick={(event: ReactMouseEvent): void => { 
+                                event.stopPropagation(); 
+                                if (onClose) onClose(event); 
+                            }}
+                            style={this.getCloseButtonStyles(theme, isActive, isHovered, isCloseHovered)}
+                        >
+                            {cloneElement(JETBRAINS_ICONS.Close as any, {
+                                color: theme.colors.attention.unfocus,  // Manually aligned with IDEA dimensions.
+                                style: {
+                                    width: this._closeIconSize,
+                                    height: this._closeIconSize
+                                }
+                            })}
+                        </div>
+                    )
+                )}
+            </div>
         );
+    }
+
+    private getStyles(isActive: boolean, isHover: boolean): CSSProperties {
+        const theme: Theme = Theme.getInstance();
+        const { style } = this.props;
+
+        let color: string = theme.colors.neutral.textSecondary;
+
+        if (isActive) {
+            color = theme.colors.neutral.text;
+        } else if (isHover) {
+            color = theme.colors.neutral.text;
+        }
+
+        return {
+            display: 'inline-flex',
+            alignItems: 'center',
+            position: 'relative',
+            padding: `0 5px`,  // Manually aligned with IDEA dimensions.
+            height: '40.5px',  // Manually aligned with IDEA dimensions.
+            color: color,
+            cursor: 'pointer',
+            fontSize: theme.typography.font.sizeLarge,  // Manually aligned with IDEA dimensions.
+            fontFamily: theme.typography.font.family,
+            userSelect: 'none',
+            transition: 'background-color 0.1s, color 0.1s',
+            ...style,
+        };
+    }
+
+    private getActiveIndicatorStyles(theme: Theme, isFocused: boolean): CSSProperties {
+        return {
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: '4px',  // Manually aligned with IDEA dimensions.
+            backgroundColor: isFocused ? theme.colors.attention.focus : theme.colors.attention.unfocus,  // Manually aligned with IDEA dimensions.
+            borderRadius: '2px 2px 2px 2px',
+        };
+    }
+
+    private getTextStyles(theme: Theme): CSSProperties {
+        return { 
+            whiteSpace: 'nowrap', 
+            overflow: 'hidden', 
+            textOverflow: 'ellipsis',
+            marginRight: `7.5px`,  // Manually aligned with IDEA dimensions.
+        };
+    }
+
+    private getNotificationIndicatorStyles(theme: Theme): CSSProperties {
+        return {
+            width: 8,
+            height: 8,
+            borderRadius: '50%',
+            backgroundColor: theme.colors.neutral.textSecondary,
+        };
+    }
+
+    private getCloseButtonStyles(theme: Theme, isActive: boolean, isHover: boolean, isCloseHovered: boolean): CSSProperties {
+        return {
+            opacity: isHover || isActive ? 1 : 0,
+            borderRadius: '50%',
+            backgroundColor: isCloseHovered ? theme.colors.button.fillHover : 'transparent',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: this._closeButtonSize,
+            height: this._closeButtonSize,
+        };
     }
 }
 
