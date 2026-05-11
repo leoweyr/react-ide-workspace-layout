@@ -8,13 +8,13 @@ import {
     cloneElement 
 } from 'react';
 
-import { IconButton } from '../functional-atoms';
-import { Theme } from '../../features/theme/Theme';
+import { IconButton } from '../../functional-atoms';
+import { Theme } from '../../../features/theme/Theme';
 import { 
     Toolbar, 
     Orientation, 
     Size 
-} from '../style-atoms';
+} from '../../style-atoms';
 import { SideBarSection } from './enums/SideBarSection';
 
 

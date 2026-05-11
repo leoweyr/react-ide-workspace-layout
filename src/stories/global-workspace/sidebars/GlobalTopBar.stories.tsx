@@ -1,21 +1,21 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { GlobalTopBar } from '../../components/global-sidebars';
+import { GlobalTopBar } from '../../../components/global-workspace';
 import {
     Icon,
     JETBRAINS_ICONS, Size
-} from '../../components/style-atoms';
+} from '../../../components/style-atoms';
 import { 
     TextButton, 
     IconButton, 
     DropDownMenuButton, 
     Tooltip 
-} from '../../components/functional-atoms';
-import logo from '../../../assets/icon.svg';
+} from '../../../components/functional-atoms';
+import logo from '../../../../assets/icon.svg';
 
 
 const meta = {
-    title: 'Global Sidebars/GlobalTopBar',
+    title: 'Global Workspace/Sidebars/GlobalTopBar',
     component: GlobalTopBar,
     tags: ['autodocs'],
     parameters: {

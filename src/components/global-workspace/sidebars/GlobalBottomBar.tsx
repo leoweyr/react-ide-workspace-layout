@@ -5,14 +5,14 @@ import {
     Orientation, 
     Size,
     Breadcrumbs
-} from '../style-atoms';
+} from '../../style-atoms';
 import { 
     IconButton, 
     TextButton, 
     IconWithTextButton,
     TooltipPosition
-} from '../functional-atoms';
-import { Theme } from '../../features/theme/Theme';
+} from '../../functional-atoms';
+import { Theme } from '../../../features/theme/Theme';
 
 
 interface GlobalBottomBarProps {

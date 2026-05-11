@@ -6,14 +6,14 @@ import {
     Orientation, 
     JETBRAINS_ICONS,
     Size
-} from '../style-atoms';
+} from '../../style-atoms';
 import { 
     TextButton, 
     IconButton, 
     DropDownMenuButton, 
     Tooltip 
-} from '../functional-atoms';
-import { Theme } from '../../features/theme/Theme';
+} from '../../functional-atoms';
+import { Theme } from '../../../features/theme/Theme';
 
 
 interface GlobalTopBarProps {

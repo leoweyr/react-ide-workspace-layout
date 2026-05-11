@@ -1,17 +1,17 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { GlobalBottomBar } from '../../components/global-sidebars';
-import { Breadcrumbs } from '../../components/style-atoms';
+import { GlobalBottomBar } from '../../../components/global-workspace';
+import { Breadcrumbs } from '../../../components/style-atoms';
 import {
     IconWithTextButton,
     IconButton,
     TextButton, Tooltip
-} from '../../components/functional-atoms';
-import { JETBRAINS_ICONS } from '../../components/style-atoms';
+} from '../../../components/functional-atoms';
+import { JETBRAINS_ICONS } from '../../../components/style-atoms';
 
 
 const meta = {
-    title: 'Global Sidebars/GlobalBottomBar',
+    title: 'Global Workspace/Sidebars/GlobalBottomBar',
     component: GlobalBottomBar,
     tags: ['autodocs'],
     parameters: {

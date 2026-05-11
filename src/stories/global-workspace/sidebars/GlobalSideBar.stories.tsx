@@ -1,13 +1,13 @@
 import { ReactElement } from 'react';
 import type { Meta, StoryObj, StoryFn } from '@storybook/react';
 
-import { GlobalSideBar } from '../../components/global-sidebars';
-import { JETBRAINS_ICONS } from '../../components/style-atoms';
-import { IconButton, Tooltip, TooltipPosition } from '../../components/functional-atoms';
+import { GlobalSideBar } from '../../../components/global-workspace';
+import { JETBRAINS_ICONS } from '../../../components/style-atoms';
+import { IconButton, Tooltip, TooltipPosition } from '../../../components/functional-atoms';
 
 
 const meta = {
-    title: 'Global Sidebars/GlobalSideBar',
+    title: 'Global Workspace/Sidebars/GlobalSideBar',
     component: GlobalSideBar,
     tags: ['autodocs'],
 } satisfies Meta<typeof GlobalSideBar>;
