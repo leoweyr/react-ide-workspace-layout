@@ -1,8 +1,8 @@
 import { ReactElement } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { Tab } from '../../components/functional-atoms';
-import { Icon, JETBRAINS_ICONS } from '../../components/style-atoms';
+import { Tab } from '../../../components/functional-atoms';
+import { Icon, JETBRAINS_ICONS } from '../../../components/style-atoms';
 
 
 const meta = {

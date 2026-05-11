@@ -1,19 +1,19 @@
-import { 
-    Component, 
-    ReactNode, 
-    CSSProperties, 
-    MouseEvent as ReactMouseEvent, 
+import {
+    Component,
+    ReactNode,
+    CSSProperties,
+    MouseEvent as ReactMouseEvent,
     cloneElement,
     ReactElement,
     isValidElement
 } from 'react';
 
-import { Theme } from '../../features/theme/Theme';
-import { 
-    Icon, 
-    Size, 
-    JETBRAINS_ICONS 
-} from '../style-atoms';
+import { Theme } from '../../../features/theme/Theme';
+import {
+    Icon,
+    Size,
+    JETBRAINS_ICONS
+} from '../../style-atoms';
 
 
 interface TabProps {
@@ -74,22 +74,22 @@ class Tab extends Component<TabProps, TabState> {
     public render(): ReactNode {
         const theme: Theme = Theme.getInstance();
 
-        const { 
+        const {
             icon,
-            title, 
+            title,
             isActive = false,
             isFocused = true,
-            hasNotification, 
-            onClose, 
-            onClick, 
-            className 
+            hasNotification,
+            onClose,
+            onClick,
+            className
         } = this.props;
 
         const { isHovered, isCloseHovered } = this.state;
 
         return (
-            <div 
-                className={className} 
+            <div
+                className={className}
                 style={this.getStyles(isActive, isHovered)}
                 onMouseEnter={this.handleMouseEnter}
                 onMouseLeave={this.handleMouseLeave}
@@ -102,8 +102,8 @@ class Tab extends Component<TabProps, TabState> {
                     color: isActive ? theme.colors.selection.background : theme.colors.neutral.textSecondary,
                     style: { marginRight: `6px`, ...icon.props.style }  // Manually aligned with IDEA dimensions.
                 })}
-        
-                <span style={this.getTextStyles(theme)}>
+
+                <span style={this.getTextStyles()}>
                     {title}
                 </span>
 
@@ -111,12 +111,12 @@ class Tab extends Component<TabProps, TabState> {
                     <div style={this.getNotificationIndicatorStyles(theme)} />
                 ) : (
                     (onClose || isHovered) && (
-                        <div 
+                        <div
                             onMouseEnter={this.handleCloseMouseEnter}
                             onMouseLeave={this.handleCloseMouseLeave}
-                            onClick={(event: ReactMouseEvent): void => { 
-                                event.stopPropagation(); 
-                                if (onClose) onClose(event); 
+                            onClick={(event: ReactMouseEvent): void => {
+                                event.stopPropagation();
+                                if (onClose) onClose(event);
                             }}
                             style={this.getCloseButtonStyles(theme, isActive, isHovered, isCloseHovered)}
                         >
@@ -174,10 +174,10 @@ class Tab extends Component<TabProps, TabState> {
         };
     }
 
-    private getTextStyles(theme: Theme): CSSProperties {
-        return { 
-            whiteSpace: 'nowrap', 
-            overflow: 'hidden', 
+    private getTextStyles(): CSSProperties {
+        return {
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
             textOverflow: 'ellipsis',
             marginRight: `7.5px`,  // Manually aligned with IDEA dimensions.
         };
