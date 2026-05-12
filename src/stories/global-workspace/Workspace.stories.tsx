@@ -143,5 +143,38 @@ export const Default: Story = {
     }
 };
 
+export const CrossComponentDrag: Story = {
+    args: {
+        ...Default.args,
+        leftBar: (
+            <GlobalSideBar
+                topActionsGroupId="left-sidebar-top"
+                bottomActionsGroupId="left-sidebar-bottom"
+                topActions={[
+                    <IconButton key="project" icon={JETBRAINS_ICONS.Folder} tooltip={<Tooltip text="Project" position={TooltipPosition.RIGHT} />} />,
+                    <IconButton key="commit" icon={JETBRAINS_ICONS.Commit} tooltip={<Tooltip text="Commit" position={TooltipPosition.RIGHT} />} />,
+                    <IconButton key="pull-requests" icon={JETBRAINS_ICONS.PrOpen} tooltip={<Tooltip text="Pull Requests" position={TooltipPosition.RIGHT} />} />
+                ]}
+                bottomActions={[
+                    <IconButton key="run" icon={JETBRAINS_ICONS.Play} tooltip={<Tooltip text="Run" position={TooltipPosition.RIGHT} />} />,
+                    <IconButton key="terminal" icon={JETBRAINS_ICONS.Terminal} tooltip={<Tooltip text="Terminal" position={TooltipPosition.RIGHT} />} />,
+                    <IconButton key="problems" icon={JETBRAINS_ICONS.ExceptionEmpty} tooltip={<Tooltip text="Problems" position={TooltipPosition.RIGHT} />} />,
+                    <IconButton key="git" icon={JETBRAINS_ICONS.Git} tooltip={<Tooltip text="Git" position={TooltipPosition.RIGHT} />} />
+                ]}
+            />
+        ),
+        rightBar: (
+            <GlobalSideBar
+                topActionsGroupId="right-sidebar-top"
+                bottomActionsGroupId="right-sidebar-bottom"
+                topActions={[
+                    <IconButton key="notifications" icon={JETBRAINS_ICONS.Bell} tooltip={<Tooltip text="Notifications" position={TooltipPosition.LEFT} />} />,
+                    <IconButton key="ai-chat" icon={JETBRAINS_ICONS.GalaxyChat} tooltip={<Tooltip text="AI Chat" position={TooltipPosition.LEFT} />} />
+                ]}
+            />
+        ),
+    }
+};
+
 
 export default meta;

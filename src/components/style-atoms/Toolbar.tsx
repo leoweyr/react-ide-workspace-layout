@@ -1,4 +1,4 @@
-import { ReactNode, CSSProperties, Component } from 'react';
+import { ReactNode, CSSProperties, Component, RefObject } from 'react';
 
 import { Theme } from '../../features/theme/Theme';
 import { Orientation } from './enums/Orientation';
@@ -20,6 +20,9 @@ interface ToolbarProps {
     /** The thickness (height when horizontal, width when vertical) of the toolbar. */
     thickness?: number;
 
+    /** Optional ref for the root div element. */
+    innerRef?: RefObject<HTMLDivElement>;
+
     className?: string;
     style?: CSSProperties;
 }
@@ -28,7 +31,7 @@ interface ToolbarProps {
 class Toolbar extends Component<ToolbarProps> {
     public render(): ReactNode {
         return (
-            <div className={this.props.className} style={this.getStyles()}>
+            <div ref={this.props.innerRef} className={this.props.className} style={this.getStyles()}>
                 {this.props.children}
             </div>
         );
