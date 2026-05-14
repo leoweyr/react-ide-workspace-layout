@@ -7,6 +7,7 @@ import {
     GlobalSideBar,
     GlobalBottomBar
 } from '../../components/global-workspace';
+import { ExtensionDirection } from '../../components/style-atoms/enums/ExtensionDirection';
 import {
     Icon,
     JETBRAINS_ICONS,
@@ -85,10 +86,13 @@ export const Default: Story = {
         ),
         leftBar: (
             <GlobalSideBar
-                topActions={[
+                topAboveActions={[
                     <IconButton key="project" icon={JETBRAINS_ICONS.Folder} tooltip={<Tooltip text="Project" position={TooltipPosition.RIGHT} />} />,
                     <IconButton key="commit" icon={JETBRAINS_ICONS.Commit} tooltip={<Tooltip text="Commit" position={TooltipPosition.RIGHT} />} />,
                     <IconButton key="pull-requests" icon={JETBRAINS_ICONS.PrOpen} tooltip={<Tooltip text="Pull Requests" position={TooltipPosition.RIGHT} />} />
+                ]}
+                topBelowActions={[
+                    <IconButton key="more-options" icon={JETBRAINS_ICONS.MoreOptions} tooltip={<Tooltip text="More tool windows" position={TooltipPosition.RIGHT} />} />
                 ]}
                 bottomActions={[
                     <IconButton key="run" icon={JETBRAINS_ICONS.Play} tooltip={<Tooltip text="Run" position={TooltipPosition.RIGHT} />} />,
@@ -100,7 +104,7 @@ export const Default: Story = {
         ),
         rightBar: (
             <GlobalSideBar
-                topActions={[
+                topAboveActions={[
                     <IconButton key="notifications" icon={JETBRAINS_ICONS.Bell} tooltip={<Tooltip text="Notifications" position={TooltipPosition.LEFT} />} />,
                     <IconButton key="ai-chat" icon={JETBRAINS_ICONS.GalaxyChat} tooltip={<Tooltip text="AI Chat" position={TooltipPosition.LEFT} />} />
                 ]}
@@ -148,12 +152,16 @@ export const CrossComponentDrag: Story = {
         ...Default.args,
         leftBar: (
             <GlobalSideBar
-                topActionsGroupId="left-sidebar-top"
+                topAboveActionsGroupId="left-sidebar-top-above"
+                topBelowActionsGroupId="left-sidebar-top-below"
                 bottomActionsGroupId="left-sidebar-bottom"
-                topActions={[
+                topAboveActions={[
                     <IconButton key="project" icon={JETBRAINS_ICONS.Folder} tooltip={<Tooltip text="Project" position={TooltipPosition.RIGHT} />} />,
                     <IconButton key="commit" icon={JETBRAINS_ICONS.Commit} tooltip={<Tooltip text="Commit" position={TooltipPosition.RIGHT} />} />,
                     <IconButton key="pull-requests" icon={JETBRAINS_ICONS.PrOpen} tooltip={<Tooltip text="Pull Requests" position={TooltipPosition.RIGHT} />} />
+                ]}
+                topBelowActions={[
+                    <IconButton key="more-options" icon={JETBRAINS_ICONS.MoreOptions} tooltip={<Tooltip text="More tool windows" position={TooltipPosition.RIGHT} />} />
                 ]}
                 bottomActions={[
                     <IconButton key="run" icon={JETBRAINS_ICONS.Play} tooltip={<Tooltip text="Run" position={TooltipPosition.RIGHT} />} />,
@@ -161,16 +169,24 @@ export const CrossComponentDrag: Story = {
                     <IconButton key="problems" icon={JETBRAINS_ICONS.ExceptionEmpty} tooltip={<Tooltip text="Problems" position={TooltipPosition.RIGHT} />} />,
                     <IconButton key="git" icon={JETBRAINS_ICONS.Git} tooltip={<Tooltip text="Git" position={TooltipPosition.RIGHT} />} />
                 ]}
+                dragDetectionDirection={ExtensionDirection.RIGHT}
+                topDragDetectionWidth={200}
+                bottomDragDetectionWidth={200}
             />
         ),
         rightBar: (
             <GlobalSideBar
-                topActionsGroupId="right-sidebar-top"
+                topAboveActionsGroupId="right-sidebar-top-above"
+                topBelowActionsGroupId="right-sidebar-top-below"
                 bottomActionsGroupId="right-sidebar-bottom"
-                topActions={[
+                topAboveActions={[
                     <IconButton key="notifications" icon={JETBRAINS_ICONS.Bell} tooltip={<Tooltip text="Notifications" position={TooltipPosition.LEFT} />} />,
                     <IconButton key="ai-chat" icon={JETBRAINS_ICONS.GalaxyChat} tooltip={<Tooltip text="AI Chat" position={TooltipPosition.LEFT} />} />
                 ]}
+                topBelowActions={[]}
+                dragDetectionDirection={ExtensionDirection.LEFT}
+                topDragDetectionWidth={200}
+                bottomDragDetectionWidth={200}
             />
         ),
     }

@@ -21,21 +21,28 @@ import {
     UIGroupItem 
 } from '../../../features';
 import { SideBarSection } from './enums/SideBarSection';
+import { ExtensionDirection } from '../../style-atoms/enums/ExtensionDirection';
 import { SideBarDragSession, SideBarDragListener } from './interfaces/SideBarDragSession';
 
 
 interface GlobalSideBarProps {
-    topActions?: ReactElement<any, typeof IconButton>[];
+    topAboveActions?: ReactElement<any, typeof IconButton>[];
+    topBelowActions?: ReactElement<any, typeof IconButton>[];
     bottomActions?: ReactElement<any, typeof IconButton>[];
-    topActionsGroupId?: string;
+    topAboveActionsGroupId?: string;
+    topBelowActionsGroupId?: string;
     bottomActionsGroupId?: string;
+    dragDetectionDirection?: ExtensionDirection;
+    topDragDetectionWidth?: number;
+    bottomDragDetectionWidth?: number;
     className?: string;
     style?: CSSProperties;
 }
 
 
 interface GlobalSideBarState {
-    topActions: ReactElement<any, typeof IconButton>[];
+    topAboveActions: ReactElement<any, typeof IconButton>[];
+    topBelowActions: ReactElement<any, typeof IconButton>[];
     bottomActions: ReactElement<any, typeof IconButton>[];
     dragSession: SideBarDragSession | null;
 }
@@ -59,7 +66,8 @@ class GlobalSideBar extends Component<GlobalSideBarProps, GlobalSideBarState> {
         this.instances.forEach((instance: GlobalSideBar): void => instance.setState({ dragSession: this.dragSession }));
     }
 
-    private topGroupRef = createRef<HTMLDivElement>();
+    private topAboveGroupRef = createRef<HTMLDivElement>();
+    private topBelowGroupRef = createRef<HTMLDivElement>();
     private bottomGroupRef = createRef<HTMLDivElement>();
     private toolbarRef = createRef<HTMLDivElement>();
     private dragTimer: number | undefined;
@@ -85,8 +93,19 @@ class GlobalSideBar extends Component<GlobalSideBarProps, GlobalSideBarState> {
         const x: number = event.clientX;
         const y: number = event.clientY;
 
-        const draggedElement: ReactElement<any, typeof IconButton> = group === SideBarSection.TOP ? this.state.topActions[index] : this.state.bottomActions[index];
-        const sourceGroupId: string | undefined = group === SideBarSection.TOP ? this.props.topActionsGroupId : this.props.bottomActionsGroupId;
+        let draggedElement: ReactElement<any, typeof IconButton>;
+        let sourceGroupId: string | undefined;
+
+        if (group === SideBarSection.TOP_ABOVE) {
+            draggedElement = this.state.topAboveActions[index];
+            sourceGroupId = this.props.topAboveActionsGroupId;
+        } else if (group === SideBarSection.TOP_BELOW) {
+            draggedElement = this.state.topBelowActions[index];
+            sourceGroupId = this.props.topBelowActionsGroupId;
+        } else {
+            draggedElement = this.state.bottomActions[index];
+            sourceGroupId = this.props.bottomActionsGroupId;
+        }
 
         if (!sourceGroupId) {
             return;
@@ -108,7 +127,7 @@ class GlobalSideBar extends Component<GlobalSideBarProps, GlobalSideBarState> {
                 mousePos: { x, y },
                 dragOffset: { x: offsetX, y: offsetY },
                 draggedSize: { width, height },
-                dropTarget: null,
+                dropTarget: this.calculateDropTarget(x, y),
             };
 
             GlobalSideBar.notifyDragUpdate();
@@ -117,7 +136,8 @@ class GlobalSideBar extends Component<GlobalSideBarProps, GlobalSideBarState> {
 
     private handleWindowMouseMove: (event: MouseEvent) => void = (event: MouseEvent): void => {
         if (GlobalSideBar.dragSession) {
-            GlobalSideBar.dragSession.mousePos = { x: event.clientX, y: event.clientY };
+            const session: SideBarDragSession = GlobalSideBar.dragSession;
+            session.mousePos = { x: event.clientX, y: event.clientY };
             
             // Perform hit testing across all instances.
             let foundTarget: { targetGroupId: string, targetIndex: number } | null = null;
@@ -131,7 +151,9 @@ class GlobalSideBar extends Component<GlobalSideBarProps, GlobalSideBarState> {
                 }
             }
 
-            GlobalSideBar.dragSession.dropTarget = foundTarget;
+            // Strictly follow the detection zones: if no direct hit, clear the target.
+            session.dropTarget = foundTarget;
+
             GlobalSideBar.notifyDragUpdate();
         }
     };
@@ -159,8 +181,12 @@ class GlobalSideBar extends Component<GlobalSideBarProps, GlobalSideBarState> {
         }
     };
 
-    private handleTopGroupUpdate: (items: UIGroupItem[]) => void = (items: UIGroupItem[]): void => {
-        this.setState({ topActions: items.map((item: UIGroupItem) => item.element as ReactElement<any, typeof IconButton>) });
+    private handleTopAboveGroupUpdate: (items: UIGroupItem[]) => void = (items: UIGroupItem[]): void => {
+        this.setState({ topAboveActions: items.map((item: UIGroupItem) => item.element as ReactElement<any, typeof IconButton>) });
+    };
+
+    private handleTopBelowGroupUpdate: (items: UIGroupItem[]) => void = (items: UIGroupItem[]): void => {
+        this.setState({ topBelowActions: items.map((item: UIGroupItem) => item.element as ReactElement<any, typeof IconButton>) });
     };
 
     private handleBottomGroupUpdate: (items: UIGroupItem[]) => void = (items: UIGroupItem[]): void => {
@@ -173,51 +199,68 @@ class GlobalSideBar extends Component<GlobalSideBarProps, GlobalSideBarState> {
         }
 
         const toolbarRect: DOMRect = this.toolbarRef.current.getBoundingClientRect();
+        const bottomRect: DOMRect | undefined = this.bottomGroupRef.current?.getBoundingClientRect();
 
-        if (mouseX < toolbarRect.left || mouseX > toolbarRect.right || mouseY < toolbarRect.top || mouseY > toolbarRect.bottom) {
-            return null;
+        const midToolbarY: number = toolbarRect.top + toolbarRect.height / 2;
+        const bottomSectionTop: number = (bottomRect && bottomRect.height > 0) ? bottomRect.top : midToolbarY + 50;
+
+        // 1. Check if we are in the bottom section.
+        if (this.props.bottomActionsGroupId && this.isMouseInBottomDragDetectionZone(mouseX, mouseY, bottomSectionTop)) {
+            const result = this.calculateIndexInGroup(this.bottomGroupRef.current!, mouseY, SideBarSection.BOTTOM);
+            return { targetGroupId: this.props.bottomActionsGroupId, targetIndex: result.index };
         }
 
-        const midY: number = toolbarRect.top + toolbarRect.height / 2;
-        const isTop: boolean = mouseY < midY;
-        const targetGroupId: string | undefined = isTop ? this.props.topActionsGroupId : this.props.bottomActionsGroupId;
-        const groupRef: RefObject<HTMLDivElement> = isTop ? this.topGroupRef : this.bottomGroupRef;
-        const section: SideBarSection = isTop ? SideBarSection.TOP : SideBarSection.BOTTOM;
+        // 2. We are in the top half. Split between TopAbove and TopBelow.
+        if (this.isMouseInTopDragDetectionZone(mouseX, mouseY, bottomSectionTop)) {
+            // Split between TopAbove and TopBelow within the top zone.
+            if (this.props.topAboveActionsGroupId && this.props.topBelowActionsGroupId) {
+                const topAboveRect: DOMRect | undefined = this.topAboveGroupRef.current?.getBoundingClientRect();
+                const topBelowRect: DOMRect | undefined = this.topBelowGroupRef.current?.getBoundingClientRect();
 
-        if (!targetGroupId || !groupRef.current) {
-            const otherSection: SideBarSection = isTop ? SideBarSection.BOTTOM : SideBarSection.TOP;
-            const otherGroupId: string | undefined = isTop ? this.props.bottomActionsGroupId : this.props.topActionsGroupId;
-            const otherGroupRef: RefObject<HTMLDivElement> = isTop ? this.bottomGroupRef : this.topGroupRef;
+                const topAboveBottom: number = topAboveRect ? topAboveRect.bottom : toolbarRect.top;
+                const topBelowTop: number = (topBelowRect && topBelowRect.height > 0) ? topBelowRect.top : topAboveBottom + 20;
+                const separatorMidY: number = (topAboveBottom + topBelowTop) / 2;
 
-            if (otherGroupId && otherGroupRef.current) {
-                const otherRect: DOMRect = otherGroupRef.current.getBoundingClientRect();
-                const buffer: number = 20;
-
-                if (mouseY >= otherRect.top - buffer && mouseY <= otherRect.bottom + buffer) {
-                    const result = this.calculateIndexInGroup(otherGroupRef.current, mouseY, otherSection);
-                    return { targetGroupId: otherGroupId, targetIndex: result.index };
+                if (mouseY < separatorMidY) {
+                    const result = this.calculateIndexInGroup(this.topAboveGroupRef.current!, mouseY, SideBarSection.TOP_ABOVE);
+                    return { targetGroupId: this.props.topAboveActionsGroupId, targetIndex: result.index };
+                } else {
+                    const result = this.calculateIndexInGroup(this.topBelowGroupRef.current!, mouseY, SideBarSection.TOP_BELOW);
+                    return { targetGroupId: this.props.topBelowActionsGroupId, targetIndex: result.index };
                 }
             }
 
-            return null;
+            // Fallbacks if only one top group exists.
+            if (this.props.topAboveActionsGroupId) {
+                const result = this.calculateIndexInGroup(this.topAboveGroupRef.current!, mouseY, SideBarSection.TOP_ABOVE);
+                return { targetGroupId: this.props.topAboveActionsGroupId, targetIndex: result.index };
+            }
+
+            if (this.props.topBelowActionsGroupId) {
+                const result = this.calculateIndexInGroup(this.topBelowGroupRef.current!, mouseY, SideBarSection.TOP_BELOW);
+                return { targetGroupId: this.props.topBelowActionsGroupId, targetIndex: result.index };
+            }
         }
 
-        const result = this.calculateIndexInGroup(groupRef.current, mouseY, section);
-
-        return { targetGroupId, targetIndex: result.index };
+        return null;
     };
 
     constructor(props: GlobalSideBarProps) {
         super(props);
 
         this.state = {
-            topActions: props.topActions || [],
+            topAboveActions: props.topAboveActions || [],
+            topBelowActions: props.topBelowActions || [],
             bottomActions: props.bottomActions || [],
             dragSession: GlobalSideBar.dragSession,
         };
 
-        if (props.topActionsGroupId && props.topActions) {
-            this.syncActionsToPool(props.topActionsGroupId, props.topActions);
+        if (props.topAboveActionsGroupId && props.topAboveActions) {
+            this.syncActionsToPool(props.topAboveActionsGroupId, props.topAboveActions);
+        }
+
+        if (props.topBelowActionsGroupId && props.topBelowActions) {
+            this.syncActionsToPool(props.topBelowActionsGroupId, props.topBelowActions);
         }
 
         if (props.bottomActionsGroupId && props.bottomActions) {
@@ -238,8 +281,16 @@ class GlobalSideBar extends Component<GlobalSideBarProps, GlobalSideBarState> {
                 className={className}
                 style={{ ...style, position: 'relative' }}
             >
-                <div ref={this.topGroupRef} style={this.getGroupContainerStyles()}>
-                    {this.renderGroup(SideBarSection.TOP)}
+                <div style={this.getGroupContainerStyles()}>
+                    <div ref={this.topAboveGroupRef} style={this.getGroupContainerStyles()}>
+                        {this.renderGroup(SideBarSection.TOP_ABOVE)}
+                    </div>
+                    
+                    {this.renderSeparator()}
+                    
+                    <div ref={this.topBelowGroupRef} style={this.getGroupContainerStyles()}>
+                        {this.renderGroup(SideBarSection.TOP_BELOW)}
+                    </div>
                 </div>
 
                 <div style={{ flex: 1 }} />
@@ -252,9 +303,16 @@ class GlobalSideBar extends Component<GlobalSideBarProps, GlobalSideBarState> {
     }
 
     public componentDidUpdate(prevProps: GlobalSideBarProps): void {
-        if (prevProps.topActions !== this.props.topActions || prevProps.bottomActions !== this.props.bottomActions) {
-            if (!this.props.topActionsGroupId) {
-                this.setState({ topActions: this.props.topActions || [] });
+        if (prevProps.topAboveActions !== this.props.topAboveActions || 
+            prevProps.topBelowActions !== this.props.topBelowActions || 
+            prevProps.bottomActions !== this.props.bottomActions) {
+            
+            if (!this.props.topAboveActionsGroupId) {
+                this.setState({ topAboveActions: this.props.topAboveActions || [] });
+            }
+
+            if (!this.props.topBelowActionsGroupId) {
+                this.setState({ topBelowActions: this.props.topBelowActions || [] });
             }
 
             if (!this.props.bottomActionsGroupId) {
@@ -262,13 +320,23 @@ class GlobalSideBar extends Component<GlobalSideBarProps, GlobalSideBarState> {
             }
         }
 
-        if (prevProps.topActionsGroupId !== this.props.topActionsGroupId) {
-            if (prevProps.topActionsGroupId) {
-                UIGroupPool.getInstance().unsubscribe(prevProps.topActionsGroupId, this.handleTopGroupUpdate);
+        if (prevProps.topAboveActionsGroupId !== this.props.topAboveActionsGroupId) {
+            if (prevProps.topAboveActionsGroupId) {
+                UIGroupPool.getInstance().unsubscribe(prevProps.topAboveActionsGroupId, this.handleTopAboveGroupUpdate);
             }
 
-            if (this.props.topActionsGroupId) {
-                this.subscribeToGroup(this.props.topActionsGroupId, SideBarSection.TOP);
+            if (this.props.topAboveActionsGroupId) {
+                this.subscribeToGroup(this.props.topAboveActionsGroupId, SideBarSection.TOP_ABOVE);
+            }
+        }
+
+        if (prevProps.topBelowActionsGroupId !== this.props.topBelowActionsGroupId) {
+            if (prevProps.topBelowActionsGroupId) {
+                UIGroupPool.getInstance().unsubscribe(prevProps.topBelowActionsGroupId, this.handleTopBelowGroupUpdate);
+            }
+
+            if (this.props.topBelowActionsGroupId) {
+                this.subscribeToGroup(this.props.topBelowActionsGroupId, SideBarSection.TOP_BELOW);
             }
         }
 
@@ -289,8 +357,12 @@ class GlobalSideBar extends Component<GlobalSideBarProps, GlobalSideBarState> {
 
         GlobalSideBar.instances.add(this);
 
-        if (this.props.topActionsGroupId) {
-            this.subscribeToGroup(this.props.topActionsGroupId, SideBarSection.TOP);
+        if (this.props.topAboveActionsGroupId) {
+            this.subscribeToGroup(this.props.topAboveActionsGroupId, SideBarSection.TOP_ABOVE);
+        }
+
+        if (this.props.topBelowActionsGroupId) {
+            this.subscribeToGroup(this.props.topBelowActionsGroupId, SideBarSection.TOP_BELOW);
         }
 
         if (this.props.bottomActionsGroupId) {
@@ -308,8 +380,12 @@ class GlobalSideBar extends Component<GlobalSideBarProps, GlobalSideBarState> {
             window.clearTimeout(this.dragTimer);
         }
 
-        if (this.props.topActionsGroupId) {
-            UIGroupPool.getInstance().unsubscribe(this.props.topActionsGroupId, this.handleTopGroupUpdate);
+        if (this.props.topAboveActionsGroupId) {
+            UIGroupPool.getInstance().unsubscribe(this.props.topAboveActionsGroupId, this.handleTopAboveGroupUpdate);
+        }
+
+        if (this.props.topBelowActionsGroupId) {
+            UIGroupPool.getInstance().unsubscribe(this.props.topBelowActionsGroupId, this.handleTopBelowGroupUpdate);
         }
 
         if (this.props.bottomActionsGroupId) {
@@ -334,35 +410,187 @@ class GlobalSideBar extends Component<GlobalSideBarProps, GlobalSideBarState> {
     private subscribeToGroup(groupId: string, section: SideBarSection): void {
         const pool: UIGroupPool = UIGroupPool.getInstance();
 
-        if (section === SideBarSection.TOP) {
-            pool.subscribe(groupId, this.handleTopGroupUpdate);
-            this.setState({ topActions: pool.getItems(groupId).map((item: UIGroupItem) => item.element as ReactElement<any, typeof IconButton>) });
+        if (section === SideBarSection.TOP_ABOVE) {
+            pool.subscribe(groupId, this.handleTopAboveGroupUpdate);
+            this.setState({ topAboveActions: pool.getItems(groupId).map((item: UIGroupItem) => item.element as ReactElement<any, typeof IconButton>) });
+        } else if (section === SideBarSection.TOP_BELOW) {
+            pool.subscribe(groupId, this.handleTopBelowGroupUpdate);
+            this.setState({ topBelowActions: pool.getItems(groupId).map((item: UIGroupItem) => item.element as ReactElement<any, typeof IconButton>) });
         } else {
             pool.subscribe(groupId, this.handleBottomGroupUpdate);
             this.setState({ bottomActions: pool.getItems(groupId).map((item: UIGroupItem) => item.element as ReactElement<any, typeof IconButton>) });
         }
     }
 
-    private calculateIndexInGroup(container: HTMLDivElement, mouseY: number, _group: SideBarSection): { index: number } {
+    private isInTopDragDetectionArea(): boolean {
+        const { dragSession }: GlobalSideBarState = this.state;
+        if (!dragSession || !this.toolbarRef.current) {
+            return false;
+        }
+
+        const toolbarRect: DOMRect = this.toolbarRef.current.getBoundingClientRect();
+        const bottomRect: DOMRect | undefined = this.bottomGroupRef.current?.getBoundingClientRect();
+
+        const midToolbarY: number = toolbarRect.top + toolbarRect.height / 2;
+        const bottomSectionTop: number = (bottomRect && bottomRect.height > 0) ? bottomRect.top : midToolbarY + 50;
+        
+        return this.isMouseInTopDragDetectionZone(dragSession.mousePos.x, dragSession.mousePos.y, bottomSectionTop);
+    }
+
+    private isMouseInTopDragDetectionZone(x: number, y: number, bottomSectionTop: number): boolean {
+        if (!this.toolbarRef.current) {
+            return false;
+        }
+
+        const { dragDetectionDirection, topDragDetectionWidth = 40 } = this.props;
+        const toolbarRect: DOMRect = this.toolbarRef.current.getBoundingClientRect();
+
+        // Vertical check for Top Zone.
+        if (y < toolbarRect.top || y >= bottomSectionTop) {
+            return false;
+        }
+
+        // Horizontal check.
+        if (dragDetectionDirection === ExtensionDirection.RIGHT) {
+            return x >= toolbarRect.left && x <= toolbarRect.right + topDragDetectionWidth;
+        } else if (dragDetectionDirection === ExtensionDirection.LEFT) {
+            return x >= toolbarRect.left - topDragDetectionWidth && x <= toolbarRect.right;
+        }
+
+        // Default: only within the sidebar itself if no extension direction is provided.
+        return x >= toolbarRect.left && x <= toolbarRect.right;
+    }
+
+    private isMouseInBottomDragDetectionZone(x: number, y: number, bottomSectionTop: number): boolean {
+        if (!this.toolbarRef.current) {
+            return false;
+        }
+
+        const { dragDetectionDirection, bottomDragDetectionWidth = 40 } = this.props;
+        const toolbarRect: DOMRect = this.toolbarRef.current.getBoundingClientRect();
+
+        // Vertical check for Bottom Zone.
+        if (y < bottomSectionTop || y > toolbarRect.bottom) {
+            return false;
+        }
+
+        // Horizontal check.
+        if (dragDetectionDirection === ExtensionDirection.RIGHT) {
+            return x >= toolbarRect.left && x <= toolbarRect.right + bottomDragDetectionWidth;
+        } else if (dragDetectionDirection === ExtensionDirection.LEFT) {
+            return x >= toolbarRect.left - bottomDragDetectionWidth && x <= toolbarRect.right;
+        }
+
+        // Default.
+        return x >= toolbarRect.left && x <= toolbarRect.right;
+    }
+
+    private renderSeparator(): ReactNode {
+        const theme: Theme = Theme.getInstance();
+        const { topBelowActions }: GlobalSideBarState = this.state;
+        
+        const isEmpty: boolean = topBelowActions.length === 0;
+        const inTopArea: boolean = this.isInTopDragDetectionArea();
+
+        if (isEmpty && !inTopArea) {
+            return null;
+        }
+
+        const color: string = (isEmpty && inTopArea) ? theme.colors.attention.focus : theme.colors.neutral.border;
+        const separatorHeight: number = 0.5;  // Manually aligned with IDEA dimensions.
+        const separatorWidth: number = 25;  // Manually aligned with IDEA dimensions.
+
+        return (
+            <div style={{ 
+                display: 'flex', 
+                justifyContent: 'center',
+                width: '100%',
+            }}>
+                <div style={{
+                    height: `${separatorHeight}px`,
+                    width: `${separatorWidth}px`,
+                    backgroundColor: color,
+                }} />
+            </div>
+        );
+    }
+
+    private getGroupIdForSection(section: SideBarSection): string | undefined {
+        if (section === SideBarSection.TOP_ABOVE) {
+            return this.props.topAboveActionsGroupId;
+        }
+        
+        if (section === SideBarSection.TOP_BELOW) {
+            return this.props.topBelowActionsGroupId;
+        }
+        
+        return this.props.bottomActionsGroupId;
+    }
+
+    private calculateIndexInGroup(container: HTMLDivElement, mouseY: number, group: SideBarSection): { index: number } {
         const children: HTMLCollection = container.children;
         const count: number = children.length;
+        if (count === 0) {
+            return { index: 0 };
+        }
+
+        const { dragSession } = this.state;
+        const currentGroupId: string | undefined = this.getGroupIdForSection(group);
+        const currentTargetIndex: number = (dragSession && dragSession.dropTarget && dragSession.dropTarget.targetGroupId === currentGroupId) 
+            ? dragSession.dropTarget.targetIndex 
+            : -1;
 
         for (let i: number = 0; i < count; i++) {
             const rect: DOMRect = children[i].getBoundingClientRect();
-            const mid: number = rect.top + rect.height / 2;
 
-            if (mouseY < mid) {
+            // 1. Sticky range: If mouse is within the vertical bounds of the item/indicator.
+            if (mouseY >= rect.top && mouseY <= rect.bottom) {
                 return { index: i };
+            }
+
+            // 2. Boundary cases for the ends of the list.
+            if (i === 0 && mouseY < rect.top) {
+                return { index: 0 };
+            }
+
+            if (i === count - 1 && mouseY > rect.bottom) {
+                return { index: count - 1 };
+            }
+
+            // 3. Gap logic with hysteresis (stickiness).
+            if (i < count - 1) {
+                const nextRect: DOMRect = children[i + 1].getBoundingClientRect();
+
+                if (mouseY > rect.bottom && mouseY < nextRect.top) {
+                    if (currentTargetIndex === i || currentTargetIndex === i + 1) {
+                        return { index: currentTargetIndex };
+                    }
+                    
+                    // Default to closest.
+                    return { index: (mouseY - rect.bottom < nextRect.top - mouseY) ? i : i + 1 };
+                }
             }
         }
 
-        return { index: count };
+        return { index: count - 1 };
     }
 
     private renderGroup(group: SideBarSection): ReactNode {
         const { dragSession }: GlobalSideBarState = this.state;
-        const originalActions: ReactElement<any, typeof IconButton>[] = group === SideBarSection.TOP ? this.state.topActions : this.state.bottomActions;
-        const groupId: string | undefined = group === SideBarSection.TOP ? this.props.topActionsGroupId : this.props.bottomActionsGroupId;
+        let originalActions: ReactElement<any, typeof IconButton>[];
+        let groupId: string | undefined;
+
+        if (group === SideBarSection.TOP_ABOVE) {
+            originalActions = this.state.topAboveActions;
+            groupId = this.props.topAboveActionsGroupId;
+        } else if (group === SideBarSection.TOP_BELOW) {
+            originalActions = this.state.topBelowActions;
+            groupId = this.props.topBelowActionsGroupId;
+        } else {
+            originalActions = this.state.bottomActions;
+            groupId = this.props.bottomActionsGroupId;
+        }
+
         const items: { action: ReactElement, index: number }[] = originalActions.map((action: ReactElement, index: number): { action: ReactElement, index: number } => ({ action, index }));
         
         const visibleItems: { action: ReactElement, index: number }[] = items.filter((item: { index: number }): boolean => 
@@ -388,15 +616,18 @@ class GlobalSideBar extends Component<GlobalSideBarProps, GlobalSideBarState> {
         ));
 
         const isTargetInThisSection: boolean = !!(dragSession && dragSession.dropTarget && dragSession.dropTarget.targetGroupId === groupId);
+        const isEmpty: boolean = group === SideBarSection.TOP_BELOW && originalActions.length === 0;
 
         if (dragSession && isTargetInThisSection && dragSession.dropTarget) {
-            rendered.splice(dragSession.dropTarget.targetIndex, 0, this.renderIndicator(dragSession.dropTarget.targetIndex));
+            rendered.splice(dragSession.dropTarget.targetIndex, 0, this.renderIndicator(dragSession.dropTarget.targetIndex, group, originalActions, true));
+        } else if (isEmpty && this.isInTopDragDetectionArea()) {
+            rendered.push(this.renderIndicator(0, group, originalActions, false));
         }
 
         return rendered;
     }
 
-    private renderIndicator(index: number): ReactNode {
+    private renderIndicator(index: number, group: SideBarSection, originalActions: ReactElement[], isTargeted: boolean): ReactNode {
         const theme: Theme = Theme.getInstance();
         const { dragSession }: GlobalSideBarState = this.state;
 
@@ -404,17 +635,42 @@ class GlobalSideBar extends Component<GlobalSideBarProps, GlobalSideBarState> {
             return null;
         }
 
+        const isTopBelowEmpty: boolean = group === SideBarSection.TOP_BELOW && originalActions.length === 0;
+
         return (
             <div 
                 key={`indicator-${index}`}
                 style={{
+                    position: 'relative',
                     height: `${dragSession.draggedSize.height}px`,
                     width: `${dragSession.draggedSize.width}px`,
-                    backgroundColor: theme.colors.selection.background,
-                    opacity: 0.3,  // Make the background color match #D4E2FF.
-                    borderRadius: theme.layout.sizing.common.borderRadius,
                 }}
-            />
+            >
+                {isTargeted && (
+                    <div style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        backgroundColor: theme.colors.selection.background,
+                        opacity: 0.3,  // Make the background color match #D4E2FF.
+                        borderRadius: theme.layout.sizing.common.borderRadius,
+                    }} />
+                )}
+                
+                {isTopBelowEmpty && (
+                    <div style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        border: `1.8px dashed ${theme.colors.attention.focus}`,  // Make the background color match #D4E2FF.
+                        boxSizing: 'border-box',
+                    }} />
+                )}
+            </div>
         );
     }
 

@@ -2,6 +2,7 @@ import { ReactElement } from 'react';
 import type { Meta, StoryObj, StoryFn } from '@storybook/react';
 
 import { GlobalSideBar } from '../../../components/global-workspace';
+import { ExtensionDirection } from '../../../components/style-atoms/enums/ExtensionDirection';
 import { JETBRAINS_ICONS } from '../../../components/style-atoms';
 import { IconButton, Tooltip, TooltipPosition } from '../../../components/functional-atoms';
 
@@ -18,17 +19,20 @@ type Story = StoryObj<typeof meta>;
 export const LeftSide: Story = {
     decorators: [
         (Story: StoryFn): ReactElement => (
-            <div style={{ height: '400px', display: 'flex' }}>
+            <div style={{ height: '600px', display: 'flex' }}>
                 <Story />
                 <div style={{ flex: 1, background: '#1e1e1e' }} />
             </div>
         ),
     ],
     args: {
-        topActions: [
+        topAboveActions: [
             <IconButton key="project" icon={JETBRAINS_ICONS.Folder} tooltip={<Tooltip text="Project" position={TooltipPosition.RIGHT} />} />,
             <IconButton key="commit" icon={JETBRAINS_ICONS.Commit} tooltip={<Tooltip text="Commit" position={TooltipPosition.RIGHT} />} />,
             <IconButton key="pull-requests" icon={JETBRAINS_ICONS.PrOpen} tooltip={<Tooltip text="Pull Requests" position={TooltipPosition.RIGHT} />} />
+        ],
+        topBelowActions: [
+            <IconButton key="more-options" icon={JETBRAINS_ICONS.MoreOptions} tooltip={<Tooltip text="More tool windows" position={TooltipPosition.RIGHT} />} />,
         ],
         bottomActions: [
             <IconButton key="run" icon={JETBRAINS_ICONS.Play} tooltip={<Tooltip text="Run" position={TooltipPosition.RIGHT} />} />,
@@ -36,6 +40,12 @@ export const LeftSide: Story = {
             <IconButton key="problems" icon={JETBRAINS_ICONS.ExceptionEmpty} tooltip={<Tooltip text="Problems" position={TooltipPosition.RIGHT} />} />,
             <IconButton key="git" icon={JETBRAINS_ICONS.Git} tooltip={<Tooltip text="Git" position={TooltipPosition.RIGHT} />} />
         ],
+        topAboveActionsGroupId: 'left-top-above',
+        topBelowActionsGroupId: 'left-top-below',
+        bottomActionsGroupId: 'left-bottom',
+        dragDetectionDirection: ExtensionDirection.RIGHT,
+        topDragDetectionWidth: 200,
+        bottomDragDetectionWidth: 200,
     },
 };
 
@@ -49,10 +59,14 @@ export const RightSide: Story = {
         ),
     ],
     args: {
-        topActions: [
+        topAboveActions: [
             <IconButton key="notifications" icon={JETBRAINS_ICONS.Bell} tooltip={<Tooltip text="Notifications" position={TooltipPosition.LEFT} />} />,
             <IconButton key="ai-chat" icon={JETBRAINS_ICONS.GalaxyChat} tooltip={<Tooltip text="AI Chat" position={TooltipPosition.LEFT} />} />
         ],
+        topAboveActionsGroupId: 'right-top-above',
+        dragDetectionDirection: ExtensionDirection.LEFT,
+        topDragDetectionWidth: 200,
+        bottomDragDetectionWidth: 200,
     },
 };
 

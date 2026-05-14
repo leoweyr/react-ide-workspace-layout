@@ -1,6 +1,7 @@
 export const SideBarSection = {
-    TOP: 'top',
-    BOTTOM: 'bottom',
+    TOP_ABOVE: 'TOP_ABOVE',
+    TOP_BELOW: 'TOP_BELOW',
+    BOTTOM: 'BOTTOM',
 } as const;
 
 
