@@ -1,11 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
+import { JETBRAINS_ICONS, Size } from '../../components/style-atoms';
 import Label from '../../components/style-atoms/Label';
-import { ComponentStyle } from '../../components/style-atoms/enums/ComponentStyle';
-import { FontColor } from '../../components/style-atoms/enums/FontColor';
-import Icon from '../../components/style-atoms/Icon';
-import { IconName } from '../../components/style-atoms/enums/IconName';
 
+
+const ICON_OPTIONS = {
+    NONE: undefined,
+    ...JETBRAINS_ICONS
+}
 
 const meta = {
     title: 'Style Atoms/Label',
@@ -13,59 +15,43 @@ const meta = {
     tags: ['autodocs'],
     argTypes: {
         text: { control: 'text' },
-        componentStyle: {
-            control: 'select',
-            options: [ComponentStyle.REGULAR, ComponentStyle.SMALL, ComponentStyle.LARGE],
+        icon: {
+          control: 'select',
+          options: Object.keys(ICON_OPTIONS),
+          mapping: ICON_OPTIONS
         },
-        fontColor: {
+        size: {
             control: 'select',
-            options: [FontColor.NORMAL, FontColor.BRIGHT, FontColor.DIM, FontColor.ERROR],
+            options: [Size.MEDIUM, Size.SMALL, Size.LARGE]
         },
-        disabled: { control: 'boolean' },
-        copyable: { control: 'boolean' },
         html: { control: 'boolean' },
+        copyable: { control: 'boolean' },
+        disabled: { control: 'boolean' }
     },
 } satisfies Meta<typeof Label>;
 
 type Story = StoryObj<typeof meta>;
 
 
-export const Primary: Story = {
-    args: {
-        text: 'Label Text',
-        componentStyle: ComponentStyle.REGULAR,
-        fontColor: FontColor.NORMAL,
-    },
-};
-
 export const WithIcon: Story = {
     args: {
-        text: 'Label with Icon',
-        icon: <Icon name={IconName.FOLDER} />,
+        text: 'Label.jsx',
+        icon: JETBRAINS_ICONS.FileJspx,
     },
 };
 
-export const SmallDim: Story = {
+export const SmallDisabled: Story = {
     args: {
-        text: 'Small Dim Label',
-        componentStyle: ComponentStyle.SMALL,
-        fontColor: FontColor.DIM,
+        text: 'Small Disabled Label',
+        size: Size.SMALL,
+        disabled: true,
     },
 };
 
-export const LargeBright: Story = {
+export const Large: Story = {
     args: {
-        text: 'Large Bright Label',
-        componentStyle: ComponentStyle.LARGE,
-        fontColor: FontColor.BRIGHT,
-        style: { background: '#555' },  // Background to see bright text.
-    },
-};
-
-export const Error: Story = {
-    args: {
-        text: 'Error Label',
-        fontColor: FontColor.ERROR,
+        text: 'Large Label',
+        size: Size.LARGE
     },
 };
 

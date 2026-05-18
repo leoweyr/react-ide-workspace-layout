@@ -1,48 +1,37 @@
-import { Component, ReactNode, CSSProperties } from 'react';
+import { ReactElement, CSSProperties, Component, ReactNode, cloneElement } from 'react';
 
-import { Theme } from '../../features/theme/Theme';
-import { ComponentStyle } from './enums/ComponentStyle';
-import { FontColor } from './enums/FontColor';
+import { Icon } from './icon';
+import { Size } from './enums/Size';
+import { Theme } from '../../features';
 
 
 interface LabelProps {
     text: string;
-    icon?: ReactNode;
-    componentStyle?: ComponentStyle;
-    fontColor?: FontColor;
-    disabled?: boolean;
-    copyable?: boolean;
+    icon?: ReactElement<any, typeof Icon>;
+    size?: Size;
     html?: boolean;
+    copyable?: boolean;
+    disabled?: boolean;
     className?: string;
     style?: CSSProperties;
-    title?: string;
-    anchor?: string;  // ID of the element to focus/activate.
 }
 
 
-interface LabelState {}
-
-
-class Label extends Component<LabelProps, LabelState> {
-    public static defaultProps = {
-        componentStyle: ComponentStyle.REGULAR,
-        fontColor: FontColor.NORMAL,
-        disabled: false,
-        copyable: false,
-        html: false,
-    };
-
+class Label extends Component<LabelProps> {
     public render(): ReactNode {
-        const { text, icon, html, className, title } = this.props;
+        const {
+            text,
+            icon,
+            html = false,
+            className
+        } = this.props;
 
         return (
             <div
                 className={className}
                 style={this.getContainerStyles()}
-                title={title}
-                onClick={this.handleAnchorClick}
             >
-                {icon && <span style={this.getIconStyles()}>{icon}</span>}
+                {icon && <span style={this.getIconStyles()}>{this.renderIcon(icon)}</span>}
                 {html ? (
                     <span
                         style={this.getTextStyles()}
@@ -55,42 +44,36 @@ class Label extends Component<LabelProps, LabelState> {
         );
     }
 
-    private handleAnchorClick: () => void = (): void => {
-        const { anchor } = this.props;
-        if (anchor) {
-            const element = document.getElementById(anchor);
-            if (element) {
-                element.focus();
-                element.click();
-            }
-        }
-    };
+    private renderIcon(icon: ReactElement<any, typeof Icon>): ReactNode {
+        return cloneElement(icon, {
+            size: this.props.size
+        });
+    }
 
     private getContainerStyles(): CSSProperties {
         const { style } = this.props;
+        const theme: Theme = Theme.getInstance();
 
         return {
             display: 'inline-flex',
             alignItems: 'center',
             verticalAlign: 'middle',
             maxWidth: '100%',
+            gap: theme.layout.spacing.small,
             ...style,
         };
     }
 
     private getIconStyles(): CSSProperties {
-        const theme = Theme.getInstance();
-
         return {
-            marginRight: theme.layout.spacing.extraSmall,
             display: 'flex',
             alignItems: 'center',
         };
     }
 
     private getTextStyles(): CSSProperties {
-        const { copyable } = this.props;
-        const theme = Theme.getInstance();
+        const { copyable = false } = this.props;
+        const theme: Theme = Theme.getInstance();
 
         return {
             color: this.getColor(),
@@ -106,38 +89,28 @@ class Label extends Component<LabelProps, LabelState> {
     }
 
     private getColor(): string {
-        const { fontColor, disabled } = this.props;
-        const theme = Theme.getInstance();
+        const { disabled = false } = this.props;
+        const theme: Theme = Theme.getInstance();
 
         if (disabled) {
-            return theme.colors.neutral.textSecondary;  // Disabled usually looks like secondary/dim.
+            return theme.colors.neutral.textSecondary;
         }
 
-        switch (fontColor) {
-            case FontColor.BRIGHT:
-                return '#ffffff';  // TODO: Add to Theme.
-            case FontColor.DIM:
-                return theme.colors.neutral.textSecondary;
-            case FontColor.ERROR:
-                return theme.colors.status.error;
-            case FontColor.NORMAL:
-            default:
-                return theme.colors.neutral.text;
-        }
+        return theme.colors.neutral.text;
     }
 
     private getFontSize(): string {
-        const { componentStyle } = this.props;
-        const theme = Theme.getInstance();
+        const { size } = this.props;
+        const theme: Theme = Theme.getInstance();
 
-        switch (componentStyle) {
-            case ComponentStyle.SMALL:
+        switch (size) {
+            case Size.SMALL:
                 return theme.typography.font.sizeSmall;
-            case ComponentStyle.LARGE:
+            case Size.LARGE:
                 return theme.typography.font.sizeLarge;
-            case ComponentStyle.REGULAR:
+            case Size.MEDIUM:
             default:
-                return theme.typography.font.size;
+                return theme.typography.font.sizeMedium;
         }
     }
 }
