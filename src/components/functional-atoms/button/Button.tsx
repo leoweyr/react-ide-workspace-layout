@@ -107,7 +107,6 @@ class Button extends Component<ButtonProps, ButtonState> {
         // Calculate spacing based on theme and size.
         let paddingX: number;
         let paddingY: number;
-        let fontSize: string;
 
         switch (size) {
             // Size not manually checked yet.

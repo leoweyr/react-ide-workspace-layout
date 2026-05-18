@@ -11,6 +11,10 @@ interface IconProps {
 
     size?: Size;
     color?: string;
+
+    /** The rotation angle of the icon in degrees. */
+    rotate?: number;
+
     className?: string;
     style?: CSSProperties;
 }
@@ -63,10 +67,11 @@ class Icon extends Component<IconProps> {
     }
 
     private getBaseStyles(): CSSProperties {
-        const { size, style } = this.props;
+        const { size, rotate, style } = this.props;
 
         let finalSize: number;
 
+        // Manually aligned with IDEA dimensions.
         switch (size) {
             case Size.SMALL:
                 finalSize = 12;
@@ -76,11 +81,9 @@ class Icon extends Component<IconProps> {
                 finalSize = 21;
 
                 break;
-
-            // Size not manually checked yet.
             case Size.MEDIUM:
             default:
-                finalSize = 19;
+                finalSize = 14;
 
                 break;
         }
@@ -93,6 +96,7 @@ class Icon extends Component<IconProps> {
             justifyContent: 'center',
             verticalAlign: 'middle',
             flexShrink: 0,
+            transform: rotate !== undefined ? `rotate(${rotate}deg)` : undefined,
             ...style,
         };
     }
