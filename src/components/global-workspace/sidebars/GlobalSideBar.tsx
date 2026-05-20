@@ -5,8 +5,7 @@ import {
     createRef,
     ReactNode,
     MouseEvent as ReactMouseEvent,
-    cloneElement,
-    RefObject
+    cloneElement
 } from 'react';
 
 import { IconButton } from '../../functional-atoms';
@@ -14,14 +13,15 @@ import { Theme } from '../../../features';
 import { 
     Toolbar, 
     Orientation, 
-    Size 
+    Size,
+    Divider
 } from '../../style-atoms';
 import { 
     UIGroupPool, 
     UIGroupItem 
 } from '../../../features';
 import { SideBarSection } from './enums/SideBarSection';
-import { ExtensionDirection } from '../../style-atoms/enums/ExtensionDirection';
+import { ExtensionDirection } from '../../style-atoms';
 import { SideBarDragSession, SideBarDragListener } from './interfaces/SideBarDragSession';
 
 
@@ -506,11 +506,12 @@ class GlobalSideBar extends Component<GlobalSideBarProps, GlobalSideBarState> {
                 justifyContent: 'center',
                 width: '100%',
             }}>
-                <div style={{
-                    height: `${separatorHeight}px`,
-                    width: `${separatorWidth}px`,
-                    backgroundColor: color,
-                }} />
+                <Divider 
+                    orientation={Orientation.HORIZONTAL}
+                    thickness={separatorHeight}
+                    length={`${separatorWidth}px`}
+                    color={color}
+                />
             </div>
         );
     }
