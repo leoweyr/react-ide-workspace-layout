@@ -23,3 +23,4 @@ export { default as TabbedPaneContent } from './TabbedPaneContent';
 export { default as TabbedPaneHeader } from './TabbedPaneHeader';
 export { default as Breadcrumbs } from './Breadcrumbs';
 export { default as Toolbar } from './Toolbar';
+export { default as Divider } from './Divider';
