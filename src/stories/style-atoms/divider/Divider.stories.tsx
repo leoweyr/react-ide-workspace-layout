@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import Divider from '../../components/style-atoms/Divider';
-import { Orientation } from '../../components/style-atoms';
+import { Divider, Orientation } from '../../../components/style-atoms';
 
 
 const meta = {

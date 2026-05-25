@@ -4,6 +4,7 @@ export * from './enums/SplitterOrientation';
 export * from './enums/ExtensionDirection'
 
 export * from './icon';
+export * from './divider';
 export { default as Label } from './Label';
 export { default as Panel } from './Panel';
 export { default as ProgressBar } from './ProgressBar';
@@ -23,4 +24,3 @@ export { default as TabbedPaneContent } from './TabbedPaneContent';
 export { default as TabbedPaneHeader } from './TabbedPaneHeader';
 export { default as Breadcrumbs } from './Breadcrumbs';
 export { default as Toolbar } from './Toolbar';
-export { default as Divider } from './Divider';

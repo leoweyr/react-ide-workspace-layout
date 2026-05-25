@@ -1,7 +1,7 @@
 import { Component, ReactNode, CSSProperties } from 'react';
 
-import { Theme } from '../../features';
-import { Orientation } from './enums/Orientation';
+import { Theme } from '../../../features';
+import { Orientation } from '../enums/Orientation';
 
 
 interface DividerProps {
