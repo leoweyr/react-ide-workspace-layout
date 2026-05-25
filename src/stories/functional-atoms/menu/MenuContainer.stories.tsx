@@ -2,7 +2,7 @@ import { ReactElement } from 'react';
 
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { MenuContainer, MenuItem } from '../../../components/functional-atoms';
+import { MenuContainer, MenuItem, OptionMenuItem } from '../../../components/functional-atoms';
 import { Label, JETBRAINS_ICONS } from '../../../components/style-atoms';
 
 
@@ -57,6 +57,41 @@ export const WithIconsAndVaryingLengths: Story = {
             </MenuItem>,
         ] as ReactElement<any, typeof MenuItem>[],
     },
+};
+
+export const WithOptionMenuItems: Story = {
+    args: {
+        items: [
+            <OptionMenuItem
+                key="new"
+                text="New"
+                rightSide={JETBRAINS_ICONS.ChevronRight}
+            />,
+            <OptionMenuItem
+                key="open"
+                text="Open"
+                icon={JETBRAINS_ICONS.Folder}
+            />,
+            <OptionMenuItem
+                key="save-as"
+                text="Save As..."
+                rightSide={<Label text="Ctrl + Shift + S" />}
+            />,
+            <OptionMenuItem
+                key="recent-projects"
+                text="Recent Projects"
+                rightSide={JETBRAINS_ICONS.ChevronRight}
+            />,
+            <OptionMenuItem
+                key="close-project"
+                text="Close Project"
+            />,
+            <OptionMenuItem
+                key="rename-projects"
+                text="Rename Projects..."
+            />
+        ] as any[]
+    }
 };
 
 

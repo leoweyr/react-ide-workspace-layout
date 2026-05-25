@@ -94,11 +94,12 @@ class OptionMenuItem extends Component<OptionMenuItemProps> {
 
     private getTextContainerStyles(): CSSProperties {
         return {
-            flex: 1,
+            flex: '1 0 auto',
             overflow: 'hidden',
             display: 'flex',
             alignItems: 'center',
-            paddingRight: '30px'  // Manually aligned with IDEA dimensions.
+            paddingRight: '30px',  // Manually aligned with IDEA dimensions.
+            whiteSpace: 'nowrap'
         };
     }
 
