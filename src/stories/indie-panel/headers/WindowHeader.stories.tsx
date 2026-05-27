@@ -1,5 +1,4 @@
 import { cloneElement, ReactElement } from 'react';
-
 import type { Meta, StoryObj } from '@storybook/react';
 
 import WindowHeader from '../../../components/indie-panel/headers/WindowHeader';

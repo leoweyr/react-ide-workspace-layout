@@ -1,10 +1,12 @@
 import { Component, ReactNode, CSSProperties, ReactElement, cloneElement, isValidElement } from 'react';
 
 import MenuItem from './MenuItem';
+import HeavyDivider from '../../style-atoms/divider/HeavyDivider';
+import LightDivider from '../../style-atoms/divider/LightDivider';
 
 
 interface MenuContainerProps {
-    items: ReactElement<any, typeof MenuItem>[];
+    items: ReactElement<any, typeof MenuItem | typeof HeavyDivider | typeof LightDivider>[];
     className?: string;
     style?: CSSProperties;
 }
@@ -21,12 +23,21 @@ class MenuContainer extends Component<MenuContainerProps> {
         );
     }
 
-    private renderItems(items: ReactElement<any, typeof MenuItem>[]): ReactNode[] {
-        return items.map((item: ReactElement<any, typeof MenuItem>, index: number): ReactNode => {
+    private renderItems(items: ReactElement<any, typeof MenuItem | typeof HeavyDivider | typeof LightDivider>[]): ReactNode[] {
+        return items.map((item: ReactElement<any, typeof MenuItem | typeof HeavyDivider | typeof LightDivider>, index: number): ReactNode => {
             if (isValidElement(item)) {
-                return cloneElement(item as ReactElement<any>, {
-                    key: item.key || index.toString()
-                });
+                const key: string = item.key || index.toString();
+                const isDivider: boolean = item.type === HeavyDivider || item.type === LightDivider;
+
+                if (isDivider) {
+                    return (
+                        <div key={key} style={{ margin: '0 -3.5px' }}>
+                            {cloneElement(item as ReactElement<any>, {})}
+                        </div>
+                    );
+                }
+
+                return cloneElement(item as ReactElement<any>, { key });
             }
 
             return item;
